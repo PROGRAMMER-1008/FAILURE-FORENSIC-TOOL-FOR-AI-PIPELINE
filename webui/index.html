@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Failure Forensics — Pipeline Monitor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --abyss: #060708;
+    --console: #0F1215;
+    --console-raised: #171B1F;
+    --phosphor: #E4E8E3;
+    --phosphor-dim: #5C6660;
+    --phosphor-faint: #383D3F;
+    --threat-red: #EF4B44;
+    --signal-cyan: #4DD9E8;
+    --verified: #3DDC91;
+    --grid-line: #1E2327;
+    --grid-line-bright: #2C3237;
+    --display: 'Space Grotesk', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+    --body: 'Inter', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--abyss); color: var(--phosphor); font-family: var(--body); min-height: 100vh; overflow-x: hidden; }
+body::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 999;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,0.01) 0px, transparent 1px, transparent 2px); }
+::selection { background: var(--signal-cyan); color: var(--abyss); }
+a { color: inherit; text-decoration: none; }
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: var(--abyss); }
+::-webkit-scrollbar-thumb { background: var(--grid-line-bright); border-radius: 5px; }
+
+#boot { position: fixed; inset: 0; background: var(--abyss); z-index: 1000; display: flex; align-items: center; justify-content: center; font-family: var(--mono); }
+#boot.hidden { animation: bootOut 0.5s ease forwards; }
+@keyframes bootOut { to { opacity: 0; visibility: hidden; } }
+.boot-lines { width: 560px; max-width: 90vw; }
+.boot-line { font-size: 0.85rem; color: var(--phosphor-dim); opacity: 0; margin-bottom: 8px; animation: bootLineIn 0.3s ease forwards; }
+.boot-line .ok { color: var(--verified); }
+.boot-line .val { color: var(--phosphor); }
+@keyframes bootLineIn { to { opacity: 1; } }
+.boot-cursor { display: inline-block; width: 8px; height: 14px; background: var(--signal-cyan); animation: blink 0.8s step-end infinite; vertical-align: text-bottom; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.shell { display: flex; min-height: 100vh; opacity: 0; }
+.shell.ready { animation: shellIn 0.6s ease forwards; }
+@keyframes shellIn { to { opacity: 1; } }
+
+.sidebar { width: 264px; flex-shrink: 0; background: var(--console); border-right: 1px solid var(--grid-line);
+    padding: 28px 22px; position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; }
+.brand { display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
+.brand-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--threat-red); box-shadow: 0 0 10px var(--threat-red); flex-shrink: 0; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.brand-name { font-family: var(--display); font-weight: 700; font-size: 1.08rem; letter-spacing: -0.01em; }
+.brand-sub { font-family: var(--mono); font-size: 0.64rem; color: var(--phosphor-dim); letter-spacing: 0.05em; text-transform: uppercase; margin: 4px 0 30px; line-height: 1.6; }
+
+.gauge-wrap { background: var(--console-raised); border: 1px solid var(--grid-line); border-radius: 8px; padding: 18px; margin-bottom: 24px; text-align: center; }
+.gauge { position: relative; width: 100px; height: 100px; margin: 0 auto 10px; }
+.gauge svg { transform: rotate(-90deg); }
+.gauge-track { fill: none; stroke: var(--grid-line); stroke-width: 6; }
+.gauge-fill { fill: none; stroke: var(--verified); stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 1s cubic-bezier(0.65,0,0.35,1), stroke 0.4s ease; }
+.gauge-fill.warn { stroke: var(--signal-cyan); }
+.gauge-fill.crit { stroke: var(--threat-red); }
+.gauge-center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-weight: 700; font-size: 1.3rem; }
+.gauge-label { font-family: var(--mono); font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--phosphor-dim); }
+
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav-item { font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.03em; color: var(--phosphor-dim); padding: 10px 13px; border-radius: 6px; cursor: pointer; transition: all 0.15s ease; display: flex; align-items: center; gap: 10px; border: 1px solid transparent; }
+.nav-item:hover { color: var(--phosphor); background: rgba(255,255,255,0.02); }
+.nav-item.active { color: var(--phosphor); background: rgba(77,217,232,0.07); border-color: rgba(77,217,232,0.25); }
+.nav-item .nav-marker { width: 5px; height: 5px; border-radius: 50%; background: var(--phosphor-faint); transition: all 0.15s ease; }
+.nav-item.active .nav-marker { background: var(--signal-cyan); box-shadow: 0 0 6px var(--signal-cyan); }
+
+.sidebar-footer { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--grid-line); font-family: var(--mono); font-size: 0.66rem; color: var(--phosphor-faint); line-height: 1.9; }
+.sidebar-footer .fl { color: var(--phosphor-dim); }
+
+.main { flex: 1; padding: 44px 52px 80px; max-width: 1180px; }
+
+.page-eyebrow { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; color: var(--signal-cyan); text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; opacity: 0; animation: fadeUp 0.5s ease forwards; }
+.page-eyebrow::before { content: ''; width: 16px; height: 1px; background: var(--signal-cyan); }
+.page-title { font-family: var(--display); font-size: 2.3rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; opacity: 0; animation: fadeUp 0.5s ease 0.05s forwards; }
+.page-desc { color: var(--phosphor-dim); font-size: 0.94rem; max-width: 620px; line-height: 1.6; margin-bottom: 36px; opacity: 0; animation: fadeUp 0.5s ease 0.1s forwards; }
+@keyframes fadeUp { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
+
+.stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--grid-line); border: 1px solid var(--grid-line); border-radius: 8px; overflow: hidden; margin-bottom: 40px; }
+.stat-tile { background: var(--console); padding: 20px 20px 18px; position: relative; opacity: 0; animation: fadeUp 0.5s ease forwards; }
+.stat-number { font-family: var(--mono); font-size: 2.2rem; font-weight: 700; color: var(--phosphor); line-height: 1; margin-bottom: 8px; font-variant-numeric: tabular-nums; display: flex; align-items: baseline; gap: 4px; }
+.stat-label { font-family: var(--mono); font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--phosphor-dim); }
+.stat-bar { height: 2px; background: var(--grid-line); margin-top: 12px; border-radius: 1px; overflow: hidden; }
+.stat-bar-fill { height: 100%; background: var(--signal-cyan); width: 0; transition: width 1s cubic-bezier(0.65,0,0.35,1) 0.3s; }
+
+.upload-zone { background: var(--console); border: 1.5px dashed var(--grid-line-bright); border-radius: 10px; padding: 32px; margin-bottom: 40px; text-align: center; cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden; }
+.upload-zone:hover, .upload-zone.dragover { border-color: var(--signal-cyan); background: rgba(77,217,232,0.03); }
+.upload-zone.dragover { border-style: solid; }
+.upload-icon { font-family: var(--mono); font-size: 1.6rem; color: var(--signal-cyan); margin-bottom: 10px; }
+.upload-title { font-family: var(--display); font-weight: 600; font-size: 1.05rem; margin-bottom: 4px; }
+.upload-sub { font-family: var(--mono); font-size: 0.72rem; color: var(--phosphor-dim); }
+.upload-zone input[type=file] { display: none; }
+.upload-progress { display: none; text-align: left; font-family: var(--mono); font-size: 0.8rem; color: var(--phosphor-dim); }
+.upload-progress.active { display: block; }
+.upload-progress .step { padding: 4px 0; opacity: 0.35; transition: opacity 0.3s ease; }
+.upload-progress .step.active { opacity: 1; color: var(--signal-cyan); }
+.upload-progress .step.done { opacity: 1; color: var(--verified); }
+.upload-progress .step .marker { display:inline-block; width:14px; }
+
+.section-label { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--phosphor-dim); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--grid-line); }
+.case-list { display: flex; flex-direction: column; gap: 1px; background: var(--grid-line); border: 1px solid var(--grid-line); border-radius: 8px; overflow: hidden; }
+.case-row { background: var(--console); padding: 16px 20px; cursor: pointer; transition: all 0.15s ease; display: flex; align-items: center; justify-content: space-between; gap: 20px; opacity: 0; animation: fadeUp 0.4s ease forwards; position: relative; }
+.case-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: transparent; transition: background 0.15s ease; }
+.case-row:hover { background: var(--console-raised); }
+.case-row:hover::before { background: var(--signal-cyan); }
+.case-row-left { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.case-id { font-family: var(--mono); font-size: 0.7rem; color: var(--phosphor-faint); }
+.case-name { font-family: var(--display); font-size: 1rem; font-weight: 600; }
+.case-row-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+.badge { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.04em; padding: 4px 10px; border-radius: 3px; display: flex; align-items: center; gap: 6px; white-space: nowrap; text-transform: uppercase; border: 1px solid transparent; }
+.badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; }
+.badge.danger { background: rgba(239,75,68,0.1); color: #F5928D; border-color: rgba(239,75,68,0.25); }
+.badge.danger::before { background: var(--threat-red); box-shadow: 0 0 5px var(--threat-red); }
+.badge.clean { background: rgba(61,220,145,0.1); color: #7EE8B5; border-color: rgba(61,220,145,0.25); }
+.badge.clean::before { background: var(--verified); }
+.badge.neutral { background: rgba(255,255,255,0.03); color: var(--phosphor-dim); border-color: var(--grid-line-bright); }
+.badge.neutral::before { background: var(--phosphor-faint); }
+.badge.reviewed { background: rgba(77,217,232,0.08); color: var(--signal-cyan); border-color: rgba(77,217,232,0.2); }
+.badge.reviewed::before { background: var(--signal-cyan); }
+.category-tag { font-family: var(--mono); font-size: 0.72rem; color: var(--phosphor-dim); }
+
+.trace-picker { background: var(--console); border: 1px solid var(--grid-line); border-radius: 8px; padding: 13px 18px; font-family: var(--mono); font-size: 0.84rem; color: var(--phosphor); width: 100%; max-width: 480px; margin-bottom: 26px; cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235C6660' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; }
+.trace-picker:focus { outline: 2px solid var(--signal-cyan); outline-offset: 2px; }
+
+.doc-card { background: var(--console); border: 1px solid var(--grid-line); border-radius: 10px; padding: 24px 28px; margin-bottom: 24px; }
+.doc-card-id { font-family: var(--mono); font-size: 0.7rem; color: var(--phosphor-faint); }
+.doc-card-name { font-family: var(--display); font-size: 1.4rem; font-weight: 700; margin: 4px 0 14px; }
+.doc-card-text { font-family: var(--mono); font-size: 0.8rem; color: var(--phosphor-dim); line-height: 1.75; white-space: pre-wrap; border-top: 1px solid var(--grid-line); padding-top: 14px; max-height: 200px; overflow-y: auto; }
+
+/* ============ PIPELINE FLOW GRAPH ============ */
+.flow-graph {
+    background: var(--console); border: 1px solid var(--grid-line); border-radius: 12px;
+    padding: 32px 24px 22px; margin-bottom: 28px;
+}
+.flow-track {
+    display: flex; align-items: center; justify-content: center;
+    max-width: 620px; margin: 0 auto; position: relative;
+}
+.flow-node-wrap { display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; width: 78px; position: relative; z-index: 2; }
+.flow-node {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--console-raised); border: 2px solid var(--grid-line-bright);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--phosphor-dim);
+    position: relative; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    opacity: 0; transform: scale(0.6);
+    animation: nodeIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+@keyframes nodeIn { to { opacity: 1; transform: scale(1); } }
+.flow-node.pending { border-color: var(--grid-line-bright); color: var(--phosphor-faint); }
+.flow-node.active {
+    border-color: var(--signal-cyan); color: var(--signal-cyan);
+    box-shadow: 0 0 0 0 rgba(77,217,232,0.4);
+    animation: nodeIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards, nodePulse 1.6s ease-in-out infinite;
+}
+@keyframes nodePulse { 0%,100% { box-shadow: 0 0 0 0 rgba(77,217,232,0.35); } 50% { box-shadow: 0 0 0 10px rgba(77,217,232,0); } }
+.flow-node.clean { border-color: var(--verified); color: var(--verified); background: rgba(61,220,145,0.08); }
+.flow-node.suspect {
+    border-color: var(--threat-red); color: var(--threat-red); background: rgba(239,75,68,0.1);
+    animation: nodeIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards, nodeAlert 1.4s ease-in-out infinite;
+}
+@keyframes nodeAlert { 0%,100% { box-shadow: 0 0 0 0 rgba(239,75,68,0.4); } 50% { box-shadow: 0 0 14px 2px rgba(239,75,68,0.3); } }
+.flow-node-icon { font-size: 1.4rem; line-height: 1; }
+.flow-node-label { font-family: var(--mono); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--phosphor-dim); margin-top: 10px; text-align: center; white-space: nowrap; }
+.flow-node.active .flow-node-label, .flow-node.clean .flow-node-label { color: var(--phosphor); }
+.flow-node.suspect .flow-node-label { color: #F5928D; }
+.flow-node-score { font-family: var(--mono); font-size: 0.6rem; color: var(--phosphor-faint); margin-top: 2px; }
+
+.flow-connector {
+    flex: 1 1 auto; height: 2px; background: var(--grid-line); min-width: 24px; max-width: 70px;
+    position: relative; top: -22px; margin: 0 -2px; z-index: 1; overflow: hidden;
+}
+.flow-connector.filled { background: var(--grid-line-bright); }
+.flow-connector .pulse-dot {
+    position: absolute; top: 50%; left: -8px; transform: translateY(-50%);
+    width: 8px; height: 8px; border-radius: 50%; background: var(--signal-cyan);
+    box-shadow: 0 0 8px var(--signal-cyan); opacity: 0;
+}
+.flow-connector.streaming .pulse-dot { animation: flowPulse 1.2s linear infinite; }
+@keyframes flowPulse { 0% { left: -8px; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+.flow-connector.done { background: linear-gradient(90deg, var(--verified), var(--verified)); }
+.flow-connector.danger { background: linear-gradient(90deg, var(--grid-line-bright), var(--threat-red)); }
+
+.flow-legend { display: flex; gap: 18px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+.flow-legend-item { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 0.68rem; color: var(--phosphor-faint); }
+.flow-legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+.flow-tooltip {
+    display: none; position: absolute; top: 78px; left: 50%; transform: translateX(-50%);
+    background: var(--console-raised); border: 1px solid var(--grid-line-bright); border-radius: 8px;
+    padding: 12px 14px; width: 220px; font-size: 0.76rem; color: var(--phosphor-dim); line-height: 1.5;
+    z-index: 10; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.flow-node-wrap:hover .flow-tooltip { display: block; }
+.flow-node { cursor: pointer; }
+
+.filmstrip { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+.frame { position: relative; background: var(--console); border: 1px solid var(--grid-line); border-radius: 8px; padding: 16px 20px; opacity: 0; animation: frameIn 0.45s ease forwards; overflow: hidden; }
+@keyframes frameIn { from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)} }
+.frame.suspect { border-color: rgba(239,75,68,0.4); background: linear-gradient(180deg, rgba(239,75,68,0.06), transparent 40%); }
+.frame.suspect .scan-sweep { position: absolute; top:0; bottom:0; left:-80px; width:80px; background: linear-gradient(90deg, transparent, rgba(77,217,232,0.25), transparent); animation: sweep 1s ease-out 0.3s forwards; pointer-events:none; }
+@keyframes sweep { to { left: 105%; } }
+.frame-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+.frame-step { font-family: var(--mono); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; display: flex; align-items: center; gap: 10px; }
+.frame-index { color: var(--phosphor-faint); font-weight: 400; }
+.frame-status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--verified); flex-shrink:0; }
+.frame.suspect .frame-status-dot { background: var(--threat-red); box-shadow: 0 0 6px var(--threat-red); }
+.waveform { display: flex; align-items: flex-end; gap: 2px; height: 20px; margin: 0 4px; }
+.waveform .bar { width: 3px; background: var(--grid-line-bright); border-radius: 1px; transition: height 0.4s ease, background 0.4s ease; }
+.frame-scores { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.score-pill { font-family: var(--mono); font-size: 0.68rem; padding: 3px 9px; border-radius: 3px; background: rgba(255,255,255,0.04); color: var(--phosphor-dim); white-space: nowrap; border: 1px solid var(--grid-line); }
+.score-pill.low { background: rgba(239,75,68,0.1); color: #F5928D; border-color: rgba(239,75,68,0.2); }
+.score-pill.high { background: rgba(61,220,145,0.1); color: #7EE8B5; border-color: rgba(61,220,145,0.2); }
+.score-pill.mid { background: rgba(77,217,232,0.1); color: var(--signal-cyan); border-color: rgba(77,217,232,0.2); }
+.frame-row { font-size: 0.84rem; line-height: 1.6; margin-top: 8px; }
+.frame-row b { color: var(--phosphor); font-weight: 600; }
+.frame-row.output { color: var(--phosphor-dim); }
+.frame-row.judge { color: var(--phosphor-dim); font-style: italic; border-left: 2px solid var(--grid-line-bright); padding-left: 10px; margin-top: 10px; }
+
+.verdict { margin-top: 22px; border-radius: 10px; padding: 22px 26px; border: 1px solid var(--grid-line); border-left: 3px solid var(--threat-red); background: var(--console); opacity: 0; animation: fadeUp 0.5s ease 0.4s forwards; }
+.verdict.clean { border-left-color: var(--verified); }
+.verdict.neutral { border-left-color: var(--phosphor-faint); }
+.verdict-label { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--threat-red); font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.verdict.clean .verdict-label { color: var(--verified); }
+.verdict.neutral .verdict-label { color: var(--phosphor-dim); }
+.verdict-title { font-family: var(--display); font-size: 1.3rem; font-weight: 700; margin: 8px 0 10px; }
+.verdict-quote { font-size: 0.92rem; color: var(--phosphor-dim); line-height: 1.65; font-style: italic; border-left: 2px solid var(--grid-line-bright); padding-left: 14px; }
+.verdict-meta { margin-top: 14px; font-family: var(--mono); font-size: 0.7rem; color: var(--phosphor-faint); display: flex; gap: 16px; flex-wrap: wrap; }
+.verdict-meta b { color: var(--phosphor-dim); }
+
+.flashcard { background: var(--console); border: 1px solid var(--grid-line); border-left: 3px solid var(--signal-cyan); border-radius: 8px; padding: 18px 22px; margin-bottom: 12px; opacity: 0; animation: fadeUp 0.45s ease forwards; }
+.flashcard-tag { font-family: var(--mono); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--signal-cyan); background: rgba(77,217,232,0.08); padding: 3px 9px; border-radius: 3px; display: inline-block; border: 1px solid rgba(77,217,232,0.2); }
+.flashcard-title { font-family: var(--display); font-weight: 600; font-size: 1.02rem; margin: 10px 0 12px; }
+.flashcard-diff { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+@media (max-width: 900px) { .flashcard-diff { grid-template-columns: 1fr; } }
+.diff-block { background: rgba(255,255,255,0.015); border-radius: 6px; padding: 12px 14px; font-size: 0.83rem; line-height: 1.55; }
+.diff-label { font-family: var(--mono); font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; display: block; }
+.diff-block.bad { border-left: 2px solid var(--threat-red); }
+.diff-block.bad .diff-label { color: #F5928D; }
+.diff-block.correct { border-left: 2px solid var(--verified); }
+.diff-block.correct .diff-label { color: #7EE8B5; }
+.flashcard-notes { font-size: 0.78rem; color: var(--phosphor-faint); font-style: italic; margin-top: 8px; }
+
+/* ============ REVIEW PANEL ============ */
+.review-panel { margin-top: 16px; border-top: 1px solid var(--grid-line); padding-top: 16px; }
+.review-toggle {
+    font-family: var(--mono); font-size: 0.74rem; color: var(--signal-cyan); cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px;
+    border: 1px solid rgba(77,217,232,0.3); border-radius: 6px; background: rgba(77,217,232,0.05);
+    transition: all 0.15s ease;
+}
+.review-toggle:hover { background: rgba(77,217,232,0.1); }
+.review-form { display: none; margin-top: 14px; }
+.review-form.open { display: block; }
+.review-choices { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.review-choice {
+    font-family: var(--mono); font-size: 0.74rem; padding: 8px 14px; border-radius: 6px;
+    border: 1px solid var(--grid-line-bright); background: var(--console-raised); color: var(--phosphor-dim);
+    cursor: pointer; transition: all 0.15s ease;
+}
+.review-choice:hover { border-color: var(--phosphor-dim); color: var(--phosphor); }
+.review-choice.selected.confirmed { border-color: var(--verified); background: rgba(61,220,145,0.1); color: #7EE8B5; }
+.review-choice.selected.corrected { border-color: var(--signal-cyan); background: rgba(77,217,232,0.1); color: var(--signal-cyan); }
+.review-choice.selected.unclear { border-color: var(--phosphor-dim); background: rgba(255,255,255,0.05); color: var(--phosphor); }
+.review-field { margin-bottom: 12px; }
+.review-field label { display: block; font-family: var(--mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--phosphor-faint); margin-bottom: 6px; }
+.review-field textarea, .review-field select, .review-field input {
+    width: 100%; background: var(--console-raised); border: 1px solid var(--grid-line); border-radius: 6px;
+    padding: 10px 12px; font-family: var(--body); font-size: 0.85rem; color: var(--phosphor); resize: vertical;
+}
+.review-field textarea:focus, .review-field select:focus, .review-field input:focus { outline: 1px solid var(--signal-cyan); border-color: var(--signal-cyan); }
+.review-submit {
+    font-family: var(--mono); font-size: 0.76rem; padding: 10px 20px; border-radius: 6px; border: none;
+    background: var(--signal-cyan); color: var(--abyss); font-weight: 700; cursor: pointer; transition: all 0.15s ease;
+}
+.review-submit:hover { background: #6FE3EF; }
+.review-submit:disabled { background: var(--grid-line-bright); color: var(--phosphor-faint); cursor: not-allowed; }
+.review-success { font-family: var(--mono); font-size: 0.8rem; color: var(--verified); padding: 12px 0; }
+
+.empty-state { text-align: center; padding: 70px 20px; color: var(--phosphor-dim); font-family: var(--mono); font-size: 0.85rem; }
+.loading-state { font-family: var(--mono); font-size: 0.8rem; color: var(--phosphor-dim); padding: 16px 0; display: flex; align-items: center; gap: 10px; }
+.loading-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--signal-cyan); animation: pulse 1s ease-in-out infinite; }
+
+@media (max-width: 900px) {
+    .shell { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: relative; }
+    .main { padding: 30px 18px 60px; }
+    .stats-row { grid-template-columns: repeat(2,1fr); }
+    .page-title { font-size: 1.7rem; }
+    .flow-track { flex-wrap: wrap; gap: 20px 4px; max-width: 100%; }
+    .flow-connector { min-width: 14px; }
+    .flow-node-label { font-size: 0.58rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+button:focus-visible, .nav-item:focus-visible, .case-row:focus-visible, .trace-picker:focus-visible, .upload-zone:focus-visible {
+    outline: 2px solid var(--signal-cyan); outline-offset: 2px;
+}
+</style>
+</head>
+<body>
+
+<div id="boot"><div class="boot-lines" id="bootLines"></div></div>
+
+<div class="shell" id="shell">
+    <aside class="sidebar">
+        <div class="brand"><span class="brand-dot"></span><span class="brand-name">FAILURE FORENSICS</span></div>
+        <div class="brand-sub">AI pipeline monitor &amp; root-cause analysis</div>
+        <div class="gauge-wrap">
+            <div class="gauge">
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <circle class="gauge-track" cx="50" cy="50" r="42"/>
+                    <circle class="gauge-fill" id="gaugeFill" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="264"/>
+                </svg>
+                <div class="gauge-center" id="gaugeCenter">—</div>
+            </div>
+            <div class="gauge-label">System Health</div>
+        </div>
+        <nav class="nav">
+            <div class="nav-item active" data-page="overview"><span class="nav-marker"></span>Case Overview</div>
+            <div class="nav-item" data-page="explorer"><span class="nav-marker"></span>Trace Explorer</div>
+            <div class="nav-item" data-page="dataset"><span class="nav-marker"></span>Eval Dataset</div>
+            <div class="nav-item" data-page="upload"><span class="nav-marker"></span>Analyze Document</div>
+        </nav>
+        <div class="sidebar-footer">
+            <div><span class="fl">Model</span> llama3.1:8b (local)</div>
+            <div><span class="fl">Runtime</span> Ollama</div>
+            <div><span class="fl">Judge</span> independent review</div>
+        </div>
+    </aside>
+    <main class="main" id="main"></main>
+</div>
+
+<script>
+const state = { page: "overview", traces: [], selectedTraceId: null };
+const FAILURE_LABELS = { extraction_hallucination: "Extraction Hallucination", misclassification: "Misclassification", propagation_error: "Propagation Error", prompt_failure: "Prompt Failure", context_loss: "Context Loss", placeholder_as_data: "Placeholder-as-Data", unclear: "Unclear" };
+
+async function fetchJSON(path, opts) {
+    const res = await fetch(path, opts);
+    if (!res.ok) throw new Error(`${path} failed: ${res.status}`);
+    return res.json();
+}
+function scoreClass(score) { if (score === null || score === undefined) return ""; if (score <= 2) return "low"; if (score === 3) return "mid"; return "high"; }
+function escapeHtml(str) { if (!str) return ""; const div = document.createElement("div"); div.textContent = str; return div.innerHTML; }
+function waveformHtml(score) {
+    const heights = [40,60,45,80,55,90,65,50,75,40];
+    const active = score ? Math.round((score/5)*10) : 3;
+    const color = score <= 2 ? 'var(--threat-red)' : score >= 4 ? 'var(--verified)' : 'var(--signal-cyan)';
+    return `<div class="waveform">${heights.map((h,i) => `<div class="bar" style="height:${i < active ? h : 15}%; background:${i < active ? color : 'var(--grid-line-bright)'}"></div>`).join('')}</div>`;
+}
+
+// ---------------- PIPELINE FLOW GRAPH (shared component) ----------------
+// Renders the pipeline as a node graph. Two modes:
+//   mode="trace"  -> shows a completed trace's spans with real scores
+//   mode="live"   -> shows a live in-progress run (used during upload)
+const FLOW_STEPS = [
+    { key: "intake", icon: "▤", label: "Intake" },
+    { key: "extraction", icon: "◈", label: "Extraction" },
+    { key: "classification", icon: "◆", label: "Classify" },
+    { key: "summarization", icon: "▣", label: "Summarize" },
+    { key: "judge", icon: "◉", label: "Judge" },
+    { key: "verdict", icon: "◎", label: "Verdict" },
+];
+
+function renderFlowGraph(containerId, { spans = null, liveState = null, finding = null }) {
+    const connCls = FLOW_STEPS.slice(0, -1).map((step, i) => {
+        let cls = "";
+        if (liveState) {
+            const order = ["intake","extraction","classification","summarization","judge","verdict"];
+            const curIdx = order.indexOf(liveState);
+            if (liveState === "done" || i < curIdx) cls = "done filled";
+            else if (i === curIdx) cls = "streaming filled";
+        } else if (spans) {
+            cls = "done filled";
+            if (finding && finding.root_cause_step === FLOW_STEPS[i+1].key) cls = "danger filled";
+        }
+        return cls;
+    });
+
+    const trackHtml = FLOW_STEPS.map((step, i) => {
+        const nodeMarkup = renderSingleNode(step, i, { spans, liveState, finding });
+        const conn = i < FLOW_STEPS.length - 1 ? `<div class="flow-connector ${connCls[i]}"><div class="pulse-dot"></div></div>` : "";
+        return nodeMarkup + conn;
+    }).join("");
+
+    const legendHtml = `
+        <div class="flow-legend">
+            <div class="flow-legend-item"><span class="flow-legend-dot" style="background:var(--phosphor-faint)"></span>Pending</div>
+            <div class="flow-legend-item"><span class="flow-legend-dot" style="background:var(--signal-cyan)"></span>In Progress</div>
+            <div class="flow-legend-item"><span class="flow-legend-dot" style="background:var(--verified)"></span>Clean</div>
+            <div class="flow-legend-item"><span class="flow-legend-dot" style="background:var(--threat-red)"></span>Suspect</div>
+        </div>`;
+
+    const el = document.getElementById(containerId);
+    if (el) el.innerHTML = `<div class="flow-graph"><div class="flow-track">${trackHtml}</div>${legendHtml}</div>`;
+}
+
+function renderSingleNode(step, i, { spans, liveState, finding }) {
+    let cls = "pending", scoreLabel = "", tooltip = "";
+    if (liveState) {
+        const order = ["intake","extraction","classification","summarization","judge","verdict"];
+        const curIdx = order.indexOf(liveState);
+        const stepIdx = order.indexOf(step.key);
+        if (liveState === "done") cls = "clean";
+        else if (stepIdx < curIdx) cls = "clean";
+        else if (stepIdx === curIdx) cls = "active";
+        else cls = "pending";
+        tooltip = cls === "active" ? "In progress…" : cls === "clean" ? "Complete" : "Waiting";
+    } else if (spans) {
+        if (step.key === "intake") { cls = "clean"; tooltip = "Document loaded and ready."; }
+        else if (step.key === "verdict") {
+            if (finding && finding.root_cause_step) { cls = "suspect"; tooltip = `Root cause: ${finding.root_cause_step}`; }
+            else { cls = "clean"; tooltip = "No root cause found — all spans passed."; }
+        } else if (step.key === "judge") {
+            const anyJudged = spans.some(s => s.judge_score !== null);
+            cls = anyJudged ? "clean" : "pending";
+            tooltip = anyJudged ? "Independent review complete." : "Not yet reviewed.";
+        } else {
+            const span = spans.find(s => s.step_name === step.key);
+            if (span) {
+                const isRoot = finding && finding.root_cause_step === step.key;
+                cls = isRoot ? "suspect" : "clean";
+                scoreLabel = span.judge_score !== null ? `J:${span.judge_score}/5` : `S:${span.confidence}/5`;
+                tooltip = span.judge_reasoning || span.output_summary || "";
+            }
+        }
+    }
+    return `<div class="flow-node-wrap"><div class="flow-node ${cls}" data-step="${step.key}" style="animation-delay:${i*0.08}s"><span class="flow-node-icon">${step.icon}</span></div><div class="flow-node-label">${step.label}</div>${scoreLabel ? `<div class="flow-node-score">${scoreLabel}</div>` : ""}${tooltip ? `<div class="flow-tooltip">${escapeHtml(tooltip.slice(0,160))}</div>` : ""}</div>`;
+}
+
+function runBoot() {
+    const lines = [
+        { text: "INIT failure-forensics/monitor v1.0" },
+        { text: "connecting to pipeline runtime..." },
+        { text: "→ ollama endpoint ", val: "localhost:11434", ok: true },
+        { text: "→ model loaded ", val: "llama3.1:8b", ok: true },
+        { text: "loading trace archive..." },
+        { text: "→ database ", val: "data/forensics.db", ok: true },
+        { text: "starting judge subsystem...", ok: true },
+        { text: "all systems nominal" },
+    ];
+    const container = document.getElementById("bootLines");
+    lines.forEach((line, i) => {
+        const div = document.createElement("div");
+        div.className = "boot-line";
+        div.style.animationDelay = `${i * 0.13}s`;
+        let html = escapeHtml(line.text);
+        if (line.val) html += `<span class="val">${line.val}</span>`;
+        if (line.ok) html += ` <span class="ok">[OK]</span>`;
+        div.innerHTML = html;
+        container.appendChild(div);
+    });
+    const cursor = document.createElement("span");
+    cursor.className = "boot-cursor";
+    container.appendChild(cursor);
+    setTimeout(() => {
+        document.getElementById("boot").classList.add("hidden");
+        document.getElementById("shell").classList.add("ready");
+        setTimeout(() => { document.getElementById("boot").style.display = "none"; }, 500);
+        loadGauge();
+        render();
+    }, lines.length * 130 + 350);
+}
+
+function loadGauge() {
+    fetchJSON("/api/stats").then(stats => {
+        const total = stats.reviewed_by_judge || 0;
+        const clean = total - (stats.root_causes_found || 0);
+        const pct = total > 0 ? Math.round((clean/total)*100) : 100;
+        const circumference = 264;
+        const offset = circumference - (pct/100)*circumference;
+        const fill = document.getElementById("gaugeFill");
+        const center = document.getElementById("gaugeCenter");
+        let cls = "";
+        if (pct < 50) cls = "crit"; else if (pct < 85) cls = "warn";
+        fill.classList.add(cls);
+        requestAnimationFrame(() => { fill.style.strokeDashoffset = offset; });
+        center.textContent = pct + "%";
+    }).catch(() => {});
+}
+
+document.querySelectorAll(".nav-item").forEach(el => {
+    el.addEventListener("click", () => {
+        document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+        el.classList.add("active");
+        state.page = el.dataset.page;
+        render();
+    });
+});
+
+function renderOverview() {
+    const main = document.getElementById("main");
+    main.innerHTML = `<div class="page-eyebrow">System status</div><h1 class="page-title">Case Overview</h1><p class="page-desc">Every document processed by the pipeline becomes a traced case file. Spans are independently reviewed, and suspect steps are escalated for root-cause analysis.</p><div class="loading-state"><span class="loading-dot"></span>Pulling telemetry…</div>`;
+    Promise.all([fetchJSON("/api/stats"), fetchJSON("/api/traces")]).then(([stats, traces]) => {
+        state.traces = traces;
+        const statsHtml = `<div class="stats-row">${statTile(stats.traces_recorded, "Traces Recorded", 0, 100)}${statTile(stats.reviewed_by_judge, "Reviewed by Judge", 1, stats.traces_recorded ? (stats.reviewed_by_judge/stats.traces_recorded*100) : 0)}${statTile(stats.root_causes_found, "Root Causes Found", 2, stats.reviewed_by_judge ? (stats.root_causes_found/stats.reviewed_by_judge*100) : 0)}${statTile(stats.confirmed_eval_cases, "Confirmed Eval Cases", 3, Math.min(stats.confirmed_eval_cases*20,100))}</div>`;
+        const listHtml = traces.length === 0 ? `<div class="empty-state">No traces recorded yet. Analyze a document to generate the first case file.</div>` : `<div class="section-label">Recent Cases</div><div class="case-list">${traces.map((t,i)=>caseRow(t,i)).join("")}</div>`;
+        main.innerHTML = `<div class="page-eyebrow">System status</div><h1 class="page-title">Case Overview</h1><p class="page-desc">Every document processed by the pipeline becomes a traced case file. Spans are independently reviewed, and suspect steps are escalated for root-cause analysis.</p>${statsHtml}${listHtml}`;
+        document.querySelectorAll(".case-row").forEach(row => {
+            row.addEventListener("click", () => {
+                state.selectedTraceId = row.dataset.traceId;
+                state.page = "explorer";
+                document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+                document.querySelector('[data-page="explorer"]').classList.add("active");
+                render();
+            });
+        });
+    }).catch(err => { main.innerHTML += `<div class="empty-state">Could not reach the API.<br><span style="color:var(--phosphor-faint)">${escapeHtml(err.message)}</span></div>`; });
+}
+function statTile(num, label, delayIdx, pct) {
+    return `<div class="stat-tile" style="animation-delay:${0.05*delayIdx}s"><div class="stat-number">${num}</div><div class="stat-label">${label}</div><div class="stat-bar"><div class="stat-bar-fill" style="width:${pct}%"></div></div></div>`;
+}
+function caseRow(t, i) {
+    let badgeHtml, catHtml = "";
+    if (!t.has_judge_data) badgeHtml = `<span class="badge neutral">Not Reviewed</span>`;
+    else if (t.finding && t.finding.root_cause_step) { badgeHtml = `<span class="badge danger">Root Cause Found</span>`; catHtml = `<span class="category-tag">${FAILURE_LABELS[t.finding.category] || t.finding.category}</span>`; }
+    else badgeHtml = `<span class="badge clean">Clean</span>`;
+    const reviewedBadge = t.flagged_bad ? `<span class="badge reviewed">Reviewed</span>` : "";
+    return `<div class="case-row" data-trace-id="${t.trace_id}" style="animation-delay:${Math.min(i*0.04,0.3)}s" tabindex="0"><div class="case-row-left"><span class="case-id">${t.trace_id.slice(0,8)}…</span><span class="case-name">${escapeHtml(t.doc_id)}</span></div><div class="case-row-right">${catHtml}${reviewedBadge}${badgeHtml}</div></div>`;
+}
+
+function renderExplorer() {
+    const main = document.getElementById("main");
+    main.innerHTML = `<div class="page-eyebrow">Evidence review</div><h1 class="page-title">Trace Explorer</h1><p class="page-desc">Step through a document's full journey through the pipeline — every span, every score, every piece of independent judge evidence.</p><div class="loading-state"><span class="loading-dot"></span>Loading traces…</div>`;
+    fetchJSON("/api/traces").then(traces => {
+        state.traces = traces;
+        if (traces.length === 0) { main.innerHTML += `<div class="empty-state">No traces recorded yet.</div>`; return; }
+        if (!state.selectedTraceId) state.selectedTraceId = traces[0].trace_id;
+        const options = traces.map(t => `<option value="${t.trace_id}" ${t.trace_id===state.selectedTraceId?"selected":""}>${escapeHtml(t.doc_id)}  (${t.trace_id.slice(0,8)}…)</option>`).join("");
+        main.innerHTML = `<div class="page-eyebrow">Evidence review</div><h1 class="page-title">Trace Explorer</h1><p class="page-desc">Step through a document's full journey through the pipeline — every span, every score, every piece of independent judge evidence.</p><select class="trace-picker" id="tracePicker">${options}</select><div id="traceDetail"><div class="loading-state"><span class="loading-dot"></span>Loading detail…</div></div>`;
+        document.getElementById("tracePicker").addEventListener("change", e => { state.selectedTraceId = e.target.value; loadTraceDetail(e.target.value); });
+        loadTraceDetail(state.selectedTraceId);
+    });
+}
+function loadTraceDetail(traceId) {
+    fetchJSON(`/api/traces/${traceId}`).then(trace => {
+        const container = document.getElementById("traceDetail");
+        const docCard = `<div class="doc-card"><div class="doc-card-id">TRACE ${trace.trace_id}</div><div class="doc-card-name">${escapeHtml(trace.doc_id)}</div><div class="doc-card-text">${escapeHtml(trace.raw_document_text.trim())}</div></div>`;
+        container.innerHTML = `${docCard}<div id="flowGraphContainer"></div><div id="filmstripContainer"></div>`;
+        renderFlowGraph("flowGraphContainer", { spans: trace.spans, finding: trace.finding });
+        renderFilmstripAndVerdict(trace);
+    });
+}
+
+function renderFilmstripAndVerdict(trace) {
+        const framesHtml = trace.spans.map((span, i) => {
+            const isRoot = trace.finding && trace.finding.root_cause_step === span.step_name;
+            const frameClass = isRoot ? "suspect" : "";
+            const selfClass = scoreClass(span.confidence), judgeClass = scoreClass(span.judge_score);
+            const judgePill = span.judge_score !== null ? `<span class="score-pill ${judgeClass}">JUDGE ${span.judge_score}/5</span>` : `<span class="score-pill">JUDGE — pending</span>`;
+            return `<div class="frame ${frameClass}" style="animation-delay:${i*0.1}s">${isRoot ? '<div class="scan-sweep"></div>' : ''}<div class="frame-top"><div class="frame-step"><span class="frame-status-dot"></span><span class="frame-index">[${i+1}]</span> ${span.step_name}</div><div class="frame-scores">${waveformHtml(span.judge_score)}<span class="score-pill ${selfClass}">SELF ${span.confidence}/5</span>${judgePill}<span class="score-pill">${span.latency_seconds}s</span></div></div><div class="frame-row output"><b>Output:</b> ${escapeHtml(span.output_summary)}</div>${span.judge_reasoning ? `<div class="frame-row judge">${escapeHtml(span.judge_reasoning)}</div>` : ''}</div>`;
+        }).join("");
+        let verdictHtml;
+        if (!trace.finding) {
+            verdictHtml = `<div class="verdict neutral"><div class="verdict-label">◉ Not Yet Reviewed</div><div class="verdict-title">No judge data available</div><div class="verdict-quote">This trace hasn't been through independent review yet.</div></div>`;
+        } else if (trace.finding.root_cause_step) {
+            const downstream = trace.finding.downstream_steps_affected.length ? `<span><b>Downstream affected:</b> ${trace.finding.downstream_steps_affected.join(", ")}</span>` : "";
+            verdictHtml = `<div class="verdict"><div class="verdict-label">◉ Root Cause Identified</div><div class="verdict-title">${trace.finding.root_cause_step} — ${FAILURE_LABELS[trace.finding.category] || trace.finding.category}</div><div class="verdict-quote">"${escapeHtml(trace.finding.evidence)}"</div><div class="verdict-meta"><span><b>Diagnosis confidence:</b> ${trace.finding.confidence_in_diagnosis.toUpperCase()}</span>${downstream}</div>${renderReviewPanel(trace)}</div>`;
+        } else {
+            verdictHtml = `<div class="verdict clean"><div class="verdict-label">◉ No Root Cause Found</div><div class="verdict-title">All spans passed review</div><div class="verdict-quote">No span showed a low judge score or significant self/judge disagreement.</div></div>`;
+        }
+        document.getElementById("filmstripContainer").innerHTML = `<div class="section-label">Span Detail</div><div class="filmstrip">${framesHtml}</div>${verdictHtml}`;
+        wireReviewPanel(trace);
+}
+
+function renderReviewPanel(trace) {
+    if (trace.flagged_bad) {
+        return `<div class="review-panel"><span class="badge reviewed">Already Reviewed by You</span></div>`;
+    }
+    return `
+        <div class="review-panel">
+            <div class="review-toggle" id="reviewToggle">◉ Is this diagnosis correct? Review it →</div>
+            <div class="review-form" id="reviewForm">
+                <div class="review-choices">
+                    <div class="review-choice" data-verdict="confirmed">✓ Confirm — analyzer is right</div>
+                    <div class="review-choice" data-verdict="corrected">✎ Correct — analyzer is wrong</div>
+                    <div class="review-choice" data-verdict="unclear">? Unclear — not confident</div>
+                </div>
+                <div id="reviewFields"></div>
+                <button class="review-submit" id="reviewSubmit" disabled>Save Review</button>
+                <div id="reviewResult"></div>
+            </div>
+        </div>`;
+}
+
+function wireReviewPanel(trace) {
+    const toggle = document.getElementById("reviewToggle");
+    const form = document.getElementById("reviewForm");
+    if (!toggle) return;
+
+    toggle.addEventListener("click", () => form.classList.toggle("open"));
+
+    let selectedVerdict = null;
+    const fieldsEl = document.getElementById("reviewFields");
+    const submitBtn = document.getElementById("reviewSubmit");
+    const categoryOptions = Object.keys(FAILURE_LABELS).map(k => `<option value="${k}">${FAILURE_LABELS[k]}</option>`).join("");
+
+    document.querySelectorAll(".review-choice").forEach(choice => {
+        choice.addEventListener("click", () => {
+            document.querySelectorAll(".review-choice").forEach(c => c.classList.remove("selected", "confirmed", "corrected", "unclear"));
+            choice.classList.add("selected", choice.dataset.verdict);
+            selectedVerdict = choice.dataset.verdict;
+            submitBtn.disabled = false;
+
+            if (selectedVerdict === "corrected") {
+                fieldsEl.innerHTML = `
+                    <div class="review-field"><label>Correct failure category</label>
+                        <select id="fieldCategory">${categoryOptions}</select></div>
+                    <div class="review-field"><label>What should the correct output have been?</label>
+                        <textarea id="fieldCorrectOutput" rows="2" placeholder="Describe what the step should have produced..."></textarea></div>
+                    <div class="review-field"><label>Notes — what did the analyzer get wrong?</label>
+                        <textarea id="fieldNotes" rows="2" placeholder="e.g. The judge claimed this was invented, but it's clearly present in the source text..."></textarea></div>`;
+            } else if (selectedVerdict === "confirmed") {
+                fieldsEl.innerHTML = `
+                    <div class="review-field"><label>What should the correct output have been? (optional)</label>
+                        <textarea id="fieldCorrectOutput" rows="2" placeholder="Optional — the ideal output for this case"></textarea></div>
+                    <div class="review-field"><label>Notes (optional)</label>
+                        <textarea id="fieldNotes" rows="2"></textarea></div>`;
+            } else {
+                fieldsEl.innerHTML = `
+                    <div class="review-field"><label>Why is this unclear? (optional)</label>
+                        <textarea id="fieldNotes" rows="2"></textarea></div>`;
+            }
+        });
+    });
+
+    submitBtn.addEventListener("click", async () => {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Saving…";
+        const payload = {
+            verdict: selectedVerdict,
+            category: document.getElementById("fieldCategory") ? document.getElementById("fieldCategory").value : null,
+            correct_output: document.getElementById("fieldCorrectOutput") ? document.getElementById("fieldCorrectOutput").value : "",
+            notes: document.getElementById("fieldNotes") ? document.getElementById("fieldNotes").value : "",
+        };
+        try {
+            await fetchJSON(`/api/traces/${trace.trace_id}/review`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+            document.getElementById("reviewResult").innerHTML = `<div class="review-success">✓ Saved to eval dataset as "${selectedVerdict}".</div>`;
+            document.getElementById("reviewForm").innerHTML = `<div class="review-success">✓ Review saved. This case is now part of your growing eval dataset.</div>`;
+        } catch (err) {
+            document.getElementById("reviewResult").innerHTML = `<div style="color:var(--threat-red); font-family:var(--mono); font-size:0.78rem;">Failed to save: ${escapeHtml(err.message)}</div>`;
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Save Review";
+        }
+    });
+}
+
+function renderDataset() {
+    const main = document.getElementById("main");
+    main.innerHTML = `<div class="page-eyebrow">Growing ground truth</div><h1 class="page-title">Eval Dataset</h1><p class="page-desc">Every confirmed or corrected diagnosis becomes a permanent, human-verified test case — generated from real pipeline failures, not hand-written.</p><div class="loading-state"><span class="loading-dot"></span>Loading eval cases…</div>`;
+    fetchJSON("/api/eval-dataset").then(cases => {
+        const confirmed = cases.filter(c=>c.verdict==="confirmed").length, corrected = cases.filter(c=>c.verdict==="corrected").length;
+        const statsHtml = `<div class="stats-row" style="grid-template-columns:repeat(3,1fr);">${statTile(cases.length,"Total Cases",0,100)}${statTile(confirmed,"Confirmed",1,cases.length?confirmed/cases.length*100:0)}${statTile(corrected,"Corrected",2,cases.length?corrected/cases.length*100:0)}</div>`;
+        const cardsHtml = cases.length === 0 ? `<div class="empty-state">No confirmed eval cases yet.</div>` : cases.map((c,i)=>flashcard(c,i)).join("");
+        main.innerHTML = `<div class="page-eyebrow">Growing ground truth</div><h1 class="page-title">Eval Dataset</h1><p class="page-desc">Every confirmed or corrected diagnosis becomes a permanent, human-verified test case — generated from real pipeline failures, not hand-written.</p>${statsHtml}${cardsHtml}`;
+    });
+}
+function flashcard(c, i) {
+    return `<div class="flashcard" style="animation-delay:${Math.min(i*0.05,0.3)}s"><span class="flashcard-tag">${c.verdict}</span><div class="flashcard-title">${escapeHtml(c.doc_id)} → ${c.failing_step} <span style="color:var(--phosphor-dim); font-weight:400;">(${FAILURE_LABELS[c.failure_category]||c.failure_category})</span></div><div class="flashcard-diff"><div class="diff-block bad"><span class="diff-label">Bad Output</span>${escapeHtml(c.bad_output)}</div><div class="diff-block correct"><span class="diff-label">Correct Output</span>${escapeHtml(c.correct_output)}</div></div>${c.reviewer_notes ? `<div class="flashcard-notes">${escapeHtml(c.reviewer_notes)}</div>` : ''}</div>`;
+}
+
+function renderUpload() {
+    const main = document.getElementById("main");
+    main.innerHTML = `<div class="page-eyebrow">Live analysis</div><h1 class="page-title">Analyze Document</h1><p class="page-desc">Upload a .txt, .pdf, or .docx file to run it through the live pipeline. Extraction, classification, summarization, and independent judge review all happen in real time.</p><div class="upload-zone" id="uploadZone" tabindex="0"><div class="upload-icon">⬒</div><div class="upload-title">Drop a document, or click to browse</div><div class="upload-sub">.TXT · .PDF · .DOCX — processed locally, nothing leaves your machine</div><input type="file" id="fileInput" accept=".txt,.pdf,.docx"></div><div id="fileNameDisplay" style="display:none; font-family:var(--mono); font-size:0.78rem; color:var(--signal-cyan); margin-bottom:16px; padding:10px 14px; background:var(--console); border:1px solid var(--grid-line); border-radius:6px;"></div><div id="liveFlowContainer"></div><div id="uploadTimerWrap" style="display:none; text-align:center; font-family:var(--mono); font-size:0.72rem; color:var(--phosphor-faint); margin-top:-16px; margin-bottom:20px;"><span id="uploadTimer"></span></div><div id="uploadResult"></div>`;
+    const zone = document.getElementById("uploadZone");
+    const input = document.getElementById("fileInput");
+    zone.addEventListener("click", () => input.click());
+    zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("dragover"); });
+    zone.addEventListener("dragleave", () => zone.classList.remove("dragover"));
+    zone.addEventListener("drop", e => { e.preventDefault(); zone.classList.remove("dragover"); if (e.dataTransfer.files.length) handleUpload(e.dataTransfer.files[0]); });
+    input.addEventListener("change", e => { if (e.target.files.length) handleUpload(e.target.files[0]); });
+}
+
+async function handleUpload(file) {
+    console.log("[Failure Forensics] Starting upload:", file.name, file.size, "bytes");
+
+    const nameDisplay = document.getElementById("fileNameDisplay");
+    nameDisplay.style.display = "block";
+    nameDisplay.textContent = `◉ ${file.name}  (${(file.size/1024).toFixed(1)} KB)`;
+
+    document.getElementById("uploadResult").innerHTML = "";
+    document.getElementById("uploadTimerWrap").style.display = "block";
+
+    // Drive the flow graph through an ESTIMATED sequence of states while
+    // the one real request is in flight. This is an honest approximation,
+    // not true step-by-step telemetry (a single POST response doesn't
+    // tell us which server-side step is currently running without
+    // websockets/SSE) - the timer label says as much, and the graph
+    // still only reaches its true final state once the real response
+    // returns, win or fail.
+    const liveOrder = ["intake","extraction","classification","summarization","judge","verdict"];
+    let liveIdx = 0;
+    renderFlowGraph("liveFlowContainer", { liveState: liveOrder[0] });
+
+    const startTime = Date.now();
+    const timerEl = document.getElementById("uploadTimer");
+    const estimateInterval = setInterval(() => {
+        if (liveIdx < liveOrder.length - 1) {
+            liveIdx++;
+            renderFlowGraph("liveFlowContainer", { liveState: liveOrder[liveIdx] });
+        }
+    }, 9000); // rough pacing across a typical 60-120s run; real completion overrides this
+    const timerInterval = setInterval(() => {
+        const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
+        if (timerEl) timerEl.textContent = `Running on local model — ${elapsed}s elapsed (est. 60–120s on CPU)`;
+    }, 500);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+        const res = await fetch("/api/analyze", { method: "POST", body: formData });
+        console.log("[Failure Forensics] Response status:", res.status);
+        clearInterval(timerInterval);
+        clearInterval(estimateInterval);
+        if (!res.ok) {
+            let detail = `Request failed with status ${res.status}`;
+            try {
+                const err = await res.json();
+                detail = err.detail || detail;
+            } catch (parseErr) {
+                console.error("[Failure Forensics] Could not parse error response:", parseErr);
+            }
+            throw new Error(detail);
+        }
+        renderFlowGraph("liveFlowContainer", { liveState: "done" });
+        document.getElementById("uploadTimerWrap").style.display = "none";
+        const trace = await res.json();
+        console.log("[Failure Forensics] Success, trace_id:", trace.trace_id);
+        renderUploadResult(trace);
+    } catch (err) {
+        console.error("[Failure Forensics] Upload failed:", err);
+        clearInterval(timerInterval);
+        clearInterval(estimateInterval);
+        document.getElementById("uploadTimerWrap").style.display = "none";
+        document.getElementById("liveFlowContainer").innerHTML = "";
+        document.getElementById("uploadResult").innerHTML = `
+            <div style="background:rgba(239,75,68,0.08); border:1px solid rgba(239,75,68,0.3); border-radius:8px; padding:20px 24px; margin-top:20px;">
+                <div style="font-family:var(--mono); font-size:0.72rem; color:var(--threat-red); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">◉ Analysis Failed</div>
+                <div style="font-family:var(--mono); font-size:0.85rem; color:var(--phosphor);">${escapeHtml(err.message)}</div>
+                <div style="font-size:0.78rem; color:var(--phosphor-faint); margin-top:10px;">Check the browser console (F12) and the terminal running <code>uvicorn</code> for more detail.</div>
+            </div>`;
+    }
+}
+
+function renderUploadResult(trace) {
+    state.selectedTraceId = trace.trace_id;
+    const container = document.getElementById("uploadResult");
+    container.innerHTML = `<div class="section-label" style="margin-top:20px;">Result</div><div id="traceDetail"></div>`;
+    loadTraceDetail(trace.trace_id);
+}
+
+function render() {
+    if (state.page === "overview") renderOverview();
+    else if (state.page === "explorer") renderExplorer();
+    else if (state.page === "dataset") renderDataset();
+    else if (state.page === "upload") renderUpload();
+}
+
+runBoot();
+</script>
+</body>
+</html>

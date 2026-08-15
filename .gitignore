@@ -1,0 +1,20 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+.env
+
+# Data - generated at runtime, not source code.
+# A small set of real example traces are deliberately kept (see the
+# exceptions below) so the repo demonstrates working output without
+# requiring a reviewer to run the pipeline themselves first.
+data/forensics.db
+data/traces/*.json
+!data/traces/f68b9c4f-fd15-41f5-bf79-bfe5d4aaa6b6.json
+!data/traces/4886c150-a961-4552-a58c-c4beffd12949.json
+!data/traces/2a3d577c-49b1-45d8-9924-a74db2343f38.json
+!data/traces/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db

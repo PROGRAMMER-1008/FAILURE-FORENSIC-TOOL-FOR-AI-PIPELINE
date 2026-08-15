@@ -1,0 +1,75 @@
+{
+  "trace_id": "f68b9c4f-fd15-41f5-bf79-bfe5d4aaa6b6",
+  "doc_id": "doc_002_ambiguous",
+  "spans": [
+    {
+      "step_name": "extraction",
+      "input_summary": "Re: Service Agreement Update\n\nFollowing our discussion, please find the revised terms below. This\nsupersedes the previous arrangement dated sometime last quarter. The\nvendor (name to be confirmed) wil...",
+      "output_summary": "date:Q3, amount:TBD",
+      "confidence": 4,
+      "latency_seconds": 1.316593885421753,
+      "llm_raw_response": "date:Q3, amount:TBD",
+      "success": true,
+      "judge_score": 4,
+      "judge_reasoning": "The output is generally well-grounded and correct. However, I notice that 'TBD' in the output is a placeholder-as-data error (check 2). This means that the output treats 'TBD' as if it were a real, concrete data value, when in fact it indicates that no amount was actually stated in the input. If this were corrected to simply omit the amount field or indicate 'unknown', I would score this higher."
+    },
+    {
+      "step_name": "classification",
+      "input_summary": "Re: Service Agreement Update\n\nFollowing our discussion, please find the revised terms below. This\nsupersedes the previous arrangement dated sometime last quarter. The\nvendor (name to be confirmed) wil...",
+      "output_summary": "type=correspondence, reasoning=This document appears to be a formal email or letter updating the terms of an existing agreement, rather than a standalone contract or invoice.",
+      "confidence": 5,
+      "latency_seconds": 1.1208653450012207,
+      "llm_raw_response": "This document appears to be a formal email or letter updating the terms of an existing agreement, rather than a standalone contract or invoice.",
+      "success": true,
+      "judge_score": 5,
+      "judge_reasoning": "The output is a reasonable and well-grounded transformation of the input. The classification step has correctly identified the type of document as correspondence, based on the language used in the input (e.g. 'Re:', 'please find the revised terms below', etc.). There are no invented content, placeholder-as-data errors, missing information, contradictions, or over-confident framing issues present in the output."
+    },
+    {
+      "step_name": "summarization",
+      "input_summary": "date:Q3, amount:TBD | type=correspondence",
+      "output_summary": "A revised service agreement has been updated, superseding a previous arrangement from last quarter. The vendor will provide ongoing support services with payment made upon delivery of milestones, alth...",
+      "confidence": 5,
+      "latency_seconds": 1.2417447566986084,
+      "llm_raw_response": "A revised service agreement has been updated, superseding a previous arrangement from last quarter. The vendor will provide ongoing support services with payment made upon delivery of milestones, although the exact amount is still to be determined.",
+      "success": true,
+      "judge_score": 2,
+      "judge_reasoning": "The output contains invented content (check 1) as it describes the service agreement being 'revised' and 'updated', which is not explicitly stated in the input. Additionally, the output uses over-confident framing (check 5) by turning a vague situation into a description that reads as settled fact."
+    }
+  ],
+  "final_output": {
+    "doc_id": "doc_002_ambiguous",
+    "raw_document": {
+      "doc_id": "doc_002_ambiguous",
+      "raw_text": "\nRe: Service Agreement Update\n\nFollowing our discussion, please find the revised terms below. This\nsupersedes the previous arrangement dated sometime last quarter. The\nvendor (name to be confirmed) will provide ongoing support services.\nPayment shall be made upon delivery of milestones, amount TBD pending\nfinal scope. Both parties agree to review this in Q3.\n\nSigned,\nThe Team\n"
+    },
+    "extraction": {
+      "doc_id": "doc_002_ambiguous",
+      "entities": [
+        {
+          "name": "Q3",
+          "value": "Q3",
+          "entity_type": "date"
+        },
+        {
+          "name": "TBD",
+          "value": "TBD",
+          "entity_type": "amount"
+        }
+      ],
+      "confidence": 4
+    },
+    "classification": {
+      "doc_id": "doc_002_ambiguous",
+      "document_type": "correspondence",
+      "confidence": 5,
+      "reasoning": "This document appears to be a formal email or letter updating the terms of an existing agreement, rather than a standalone contract or invoice."
+    },
+    "summary": {
+      "doc_id": "doc_002_ambiguous",
+      "summary": "A revised service agreement has been updated, superseding a previous arrangement from last quarter. The vendor will provide ongoing support services with payment made upon delivery of milestones, although the exact amount is still to be determined.",
+      "confidence": 5
+    }
+  },
+  "status": "success",
+  "flagged_bad": true
+}
