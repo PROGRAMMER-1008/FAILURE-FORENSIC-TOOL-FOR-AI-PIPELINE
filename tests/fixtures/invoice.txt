@@ -1,0 +1,6 @@
+SYNTHETIC TEST DATA - NOT A REAL INVOICE
+Example Comet Workshop
+Invoice: SYN-0001
+Total: 814 EUR
+Recipient: Example Anvil Laboratory
+Payment status: unknown

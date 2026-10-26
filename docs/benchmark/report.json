@@ -1,0 +1,7573 @@
+{
+  "execution_mode": "synthetic_injected_mechanics_only",
+  "dataset": "curated-mechanics-1",
+  "cases": 72,
+  "families": 6,
+  "seed": 42,
+  "commit": "64a3e06fc45720376feddaa9d98b5a39d5e262a3",
+  "implementation_sha256": "92a2cd93d590a0c5be5e1f9d765b62334dee521a205e074cfbca4ea82516515b",
+  "dataset_sha256": "e85f63fca2d91ab468f43df2ee95916a70367839e57bf772b7bafc8bda61a647",
+  "model_identifiers": [
+    "injected-not-inference"
+  ],
+  "tokens": null,
+  "provider_cost": null,
+  "citation_validity": {
+    "total": 66,
+    "valid": 60,
+    "meaning": "Quote/offset validity only; not diagnosis correctness"
+  },
+  "hardware": "AMD64",
+  "platform": "Windows",
+  "concurrency": 1,
+  "command": "uv run python -m ffv2.benchmark --output docs/benchmark",
+  "metrics": {
+    "ablation_no_graph": {
+      "category_macro_f1": 1.0,
+      "eligible": 54,
+      "excluded_ambiguous": 18,
+      "mean_origin_precision": 1.0,
+      "mean_origin_recall": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "exact_set_match": 1.0,
+      "coverage": 0.8888888888888888,
+      "conditional_exact": 1.0,
+      "family_bootstrap_95_interval": [
+        1.0,
+        1.0
+      ],
+      "per_scenario_counts": {
+        "success": 6,
+        "extraction_propagation": 6,
+        "classification": 6,
+        "summary_only": 6,
+        "multiple": 6,
+        "timeout": 6,
+        "schema": 6,
+        "missing_judge": 0,
+        "false_allegation": 0,
+        "contradiction": 0,
+        "partial": 6,
+        "low_confidence_correct": 6
+      }
+    },
+    "ablation_no_source": {
+      "category_macro_f1": 0.4,
+      "eligible": 54,
+      "excluded_ambiguous": 18,
+      "mean_origin_precision": 0.5555555555555556,
+      "mean_origin_recall": 0.5555555555555556,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.5714285714285714,
+      "exact_set_match": 0.5555555555555556,
+      "coverage": 0.5555555555555556,
+      "conditional_exact": 1.0,
+      "family_bootstrap_95_interval": [
+        0.5555555555555556,
+        0.5555555555555556
+      ],
+      "per_scenario_counts": {
+        "success": 6,
+        "extraction_propagation": 6,
+        "classification": 6,
+        "summary_only": 6,
+        "multiple": 6,
+        "timeout": 6,
+        "schema": 6,
+        "missing_judge": 0,
+        "false_allegation": 0,
+        "contradiction": 0,
+        "partial": 6,
+        "low_confidence_correct": 6
+      }
+    },
+    "graph": {
+      "category_macro_f1": 1.0,
+      "eligible": 54,
+      "excluded_ambiguous": 18,
+      "mean_origin_precision": 1.0,
+      "mean_origin_recall": 1.0,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "exact_set_match": 1.0,
+      "coverage": 1.0,
+      "conditional_exact": 1.0,
+      "family_bootstrap_95_interval": [
+        1.0,
+        1.0
+      ],
+      "per_scenario_counts": {
+        "success": 6,
+        "extraction_propagation": 6,
+        "classification": 6,
+        "summary_only": 6,
+        "multiple": 6,
+        "timeout": 6,
+        "schema": 6,
+        "missing_judge": 0,
+        "false_allegation": 0,
+        "contradiction": 0,
+        "partial": 6,
+        "low_confidence_correct": 6
+      }
+    },
+    "legacy_reverse_scan": {
+      "category_macro_f1": 0.1111111111111111,
+      "eligible": 54,
+      "excluded_ambiguous": 18,
+      "mean_origin_precision": 0.8888888888888888,
+      "mean_origin_recall": 0.8333333333333334,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.0,
+      "exact_set_match": 0.7777777777777778,
+      "coverage": 1.0,
+      "conditional_exact": 0.7777777777777778,
+      "family_bootstrap_95_interval": [
+        0.7777777777777778,
+        0.7777777777777778
+      ],
+      "per_scenario_counts": {
+        "success": 6,
+        "extraction_propagation": 6,
+        "classification": 6,
+        "summary_only": 6,
+        "multiple": 6,
+        "timeout": 6,
+        "schema": 6,
+        "missing_judge": 0,
+        "false_allegation": 0,
+        "contradiction": 0,
+        "partial": 6,
+        "low_confidence_correct": 6
+      }
+    },
+    "technical_rules": {
+      "category_macro_f1": 0.4,
+      "eligible": 54,
+      "excluded_ambiguous": 18,
+      "mean_origin_precision": 0.5555555555555556,
+      "mean_origin_recall": 0.5555555555555556,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 0.5714285714285714,
+      "exact_set_match": 0.5555555555555556,
+      "coverage": 1.0,
+      "conditional_exact": 0.5555555555555556,
+      "family_bootstrap_95_interval": [
+        0.5555555555555556,
+        0.5555555555555556
+      ],
+      "per_scenario_counts": {
+        "success": 6,
+        "extraction_propagation": 6,
+        "classification": 6,
+        "summary_only": 6,
+        "multiple": 6,
+        "timeout": 6,
+        "schema": 6,
+        "missing_judge": 0,
+        "false_allegation": 0,
+        "contradiction": 0,
+        "partial": 6,
+        "low_confidence_correct": 6
+      }
+    }
+  },
+  "not_run": [
+    "whole-trace real judge",
+    "real producer/judge ablations",
+    "human agreement",
+    "real-model performance",
+    "corrected-output scoring",
+    "live latency/tokens/cost"
+  ],
+  "limitations": [
+    "Six template families with twelve injected scenarios each; repeated mechanics are not independent real documents",
+    "Intervals describe fixture family resampling, not population model accuracy",
+    "No real human labels or model calls",
+    "Ambiguous cases reported but excluded from exact-set scoring; abstention retained",
+    "Frozen family split is metadata; no prompt tuning performed"
+  ],
+  "results": [
+    {
+      "case_id": "fixture-0-success",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-success",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-success",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-success",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-success",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-extraction_propagation",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-extraction_propagation",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "propagation"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-0-extraction_propagation",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-0-extraction_propagation",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-0-extraction_propagation",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": true,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-classification",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "graph",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "misclassification"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-classification",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-classification",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "technical_rules",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-0-classification",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-0-classification",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "misclassification"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-summary_only",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "graph",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-summary_only",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-summary_only",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "technical_rules",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-0-summary_only",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-0-summary_only",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-multiple",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "graph",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted": [
+        "extract",
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-multiple",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "propagation"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 1.0,
+      "recall": 0.5
+    },
+    {
+      "case_id": "fixture-0-multiple",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-0-multiple",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-0-multiple",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted": [
+        "extract",
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-timeout",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-timeout",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-timeout",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-timeout",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-timeout",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-schema",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-schema",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-schema",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-schema",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-schema",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-missing_judge",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-missing_judge",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-missing_judge",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-missing_judge",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-missing_judge",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-false_allegation",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-false_allegation",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": false,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-false_allegation",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-false_allegation",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-false_allegation",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-contradiction",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-contradiction",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": false,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-contradiction",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-contradiction",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-contradiction",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-partial",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-partial",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-partial",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-partial",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-partial",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-low_confidence_correct",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-low_confidence_correct",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-low_confidence_correct",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-low_confidence_correct",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-0-low_confidence_correct",
+      "family": "synthetic-family-0",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-success",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-success",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-success",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-success",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-success",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-extraction_propagation",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-extraction_propagation",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "propagation"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-1-extraction_propagation",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-1-extraction_propagation",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-1-extraction_propagation",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": true,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-classification",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "graph",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "misclassification"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-classification",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-classification",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "technical_rules",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-1-classification",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-1-classification",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "misclassification"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-summary_only",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "graph",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-summary_only",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-summary_only",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "technical_rules",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-1-summary_only",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-1-summary_only",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-multiple",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "graph",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted": [
+        "extract",
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-multiple",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "propagation"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 1.0,
+      "recall": 0.5
+    },
+    {
+      "case_id": "fixture-1-multiple",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-1-multiple",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-1-multiple",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted": [
+        "extract",
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-timeout",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-timeout",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-timeout",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-timeout",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-timeout",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-schema",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-schema",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-schema",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-schema",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-schema",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-missing_judge",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-missing_judge",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-missing_judge",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-missing_judge",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-missing_judge",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-false_allegation",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-false_allegation",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": false,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-false_allegation",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-false_allegation",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-false_allegation",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-contradiction",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-contradiction",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": false,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-contradiction",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-contradiction",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-contradiction",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-partial",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-partial",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-partial",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-partial",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-partial",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-low_confidence_correct",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-low_confidence_correct",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-low_confidence_correct",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-low_confidence_correct",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-1-low_confidence_correct",
+      "family": "synthetic-family-1",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-success",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-success",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-success",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-success",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-success",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-extraction_propagation",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-extraction_propagation",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "propagation"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-2-extraction_propagation",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-2-extraction_propagation",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-2-extraction_propagation",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": true,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-classification",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "graph",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "misclassification"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-classification",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-classification",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "technical_rules",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-2-classification",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-2-classification",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "misclassification"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-summary_only",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "graph",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-summary_only",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-summary_only",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "technical_rules",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-2-summary_only",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-2-summary_only",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-multiple",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "graph",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted": [
+        "extract",
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-multiple",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "propagation"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 1.0,
+      "recall": 0.5
+    },
+    {
+      "case_id": "fixture-2-multiple",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-2-multiple",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-2-multiple",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted": [
+        "extract",
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-timeout",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-timeout",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-timeout",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-timeout",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-timeout",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-schema",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-schema",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-schema",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-schema",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-schema",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-missing_judge",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-missing_judge",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-missing_judge",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-missing_judge",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-missing_judge",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-false_allegation",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-false_allegation",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": false,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-false_allegation",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-false_allegation",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-false_allegation",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-contradiction",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-contradiction",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": false,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-contradiction",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-contradiction",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-contradiction",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-partial",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-partial",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-partial",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-partial",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-partial",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-low_confidence_correct",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-low_confidence_correct",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-low_confidence_correct",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-low_confidence_correct",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-2-low_confidence_correct",
+      "family": "synthetic-family-2",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-success",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-success",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-success",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-success",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-success",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "success",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-extraction_propagation",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-extraction_propagation",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "propagation"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-3-extraction_propagation",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-3-extraction_propagation",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-3-extraction_propagation",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "extraction_propagation",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": true,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-classification",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "graph",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "misclassification"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-classification",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-classification",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "technical_rules",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-3-classification",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-3-classification",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "classification",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "misclassification"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-summary_only",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "graph",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-summary_only",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-summary_only",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "technical_rules",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-3-summary_only",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-3-summary_only",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "summary_only",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-multiple",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "graph",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted": [
+        "extract",
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-multiple",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "propagation"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 1.0,
+      "recall": 0.5
+    },
+    {
+      "case_id": "fixture-3-multiple",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-3-multiple",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-3-multiple",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "multiple",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted": [
+        "extract",
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-timeout",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-timeout",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-timeout",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-timeout",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-timeout",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "timeout",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-schema",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-schema",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-schema",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-schema",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-schema",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "schema",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-missing_judge",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-missing_judge",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-missing_judge",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-missing_judge",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-missing_judge",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "missing_judge",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-false_allegation",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-false_allegation",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": false,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-false_allegation",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-false_allegation",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-false_allegation",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "false_allegation",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-contradiction",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-contradiction",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": false,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-contradiction",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-contradiction",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-contradiction",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "contradiction",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-partial",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-partial",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-partial",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-partial",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-partial",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "partial",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-low_confidence_correct",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-low_confidence_correct",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-low_confidence_correct",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-low_confidence_correct",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-3-low_confidence_correct",
+      "family": "synthetic-family-3",
+      "split": "development",
+      "scenario": "low_confidence_correct",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-success",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "success",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-success",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "success",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-success",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "success",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-success",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "success",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-success",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "success",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-extraction_propagation",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "extraction_propagation",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-extraction_propagation",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "extraction_propagation",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "propagation"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-4-extraction_propagation",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "extraction_propagation",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-4-extraction_propagation",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "extraction_propagation",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-4-extraction_propagation",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "extraction_propagation",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": true,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-classification",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "classification",
+      "analyzer": "graph",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "misclassification"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-classification",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "classification",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-classification",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "classification",
+      "analyzer": "technical_rules",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-4-classification",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "classification",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-4-classification",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "classification",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "misclassification"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-summary_only",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "summary_only",
+      "analyzer": "graph",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-summary_only",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "summary_only",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-summary_only",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "summary_only",
+      "analyzer": "technical_rules",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-4-summary_only",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "summary_only",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-4-summary_only",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "summary_only",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-multiple",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "multiple",
+      "analyzer": "graph",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted": [
+        "extract",
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-multiple",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "multiple",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "propagation"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 1.0,
+      "recall": 0.5
+    },
+    {
+      "case_id": "fixture-4-multiple",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "multiple",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-4-multiple",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "multiple",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-4-multiple",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "multiple",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted": [
+        "extract",
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-timeout",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "timeout",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-timeout",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "timeout",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-timeout",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "timeout",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-timeout",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "timeout",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-timeout",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "timeout",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-schema",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "schema",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-schema",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "schema",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-schema",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "schema",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-schema",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "schema",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-schema",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "schema",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-missing_judge",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "missing_judge",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-missing_judge",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "missing_judge",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-missing_judge",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "missing_judge",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-missing_judge",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "missing_judge",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-missing_judge",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "missing_judge",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-false_allegation",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "false_allegation",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-false_allegation",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "false_allegation",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": false,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-false_allegation",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "false_allegation",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-false_allegation",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "false_allegation",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-false_allegation",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "false_allegation",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-contradiction",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "contradiction",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-contradiction",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "contradiction",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": false,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-contradiction",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "contradiction",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-contradiction",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "contradiction",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-contradiction",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "contradiction",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-partial",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "partial",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-partial",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "partial",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-partial",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "partial",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-partial",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "partial",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-partial",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "partial",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-low_confidence_correct",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "low_confidence_correct",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-low_confidence_correct",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "low_confidence_correct",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-low_confidence_correct",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "low_confidence_correct",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-low_confidence_correct",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "low_confidence_correct",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-4-low_confidence_correct",
+      "family": "synthetic-family-4",
+      "split": "validation",
+      "scenario": "low_confidence_correct",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-success",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "success",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-success",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "success",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-success",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "success",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-success",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "success",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-success",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "success",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-extraction_propagation",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "extraction_propagation",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-extraction_propagation",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "extraction_propagation",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "propagation"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-5-extraction_propagation",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "extraction_propagation",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-5-extraction_propagation",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "extraction_propagation",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-5-extraction_propagation",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "extraction_propagation",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "extraction"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": true,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-classification",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "classification",
+      "analyzer": "graph",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "misclassification"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-classification",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "classification",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-classification",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "classification",
+      "analyzer": "technical_rules",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-5-classification",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "classification",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-5-classification",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "classification",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "classify"
+      ],
+      "expected_categories": [
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "misclassification"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-summary_only",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "summary_only",
+      "analyzer": "graph",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-summary_only",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "summary_only",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-summary_only",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "summary_only",
+      "analyzer": "technical_rules",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-5-summary_only",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "summary_only",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-5-summary_only",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "summary_only",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "summarize"
+      ],
+      "expected_categories": [
+        "unsupported_claim"
+      ],
+      "predicted_categories": [
+        "unsupported_claim"
+      ],
+      "predicted": [
+        "summarize"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-multiple",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "multiple",
+      "analyzer": "graph",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted": [
+        "extract",
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-multiple",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "multiple",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "propagation"
+      ],
+      "predicted": [
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 1.0,
+      "recall": 0.5
+    },
+    {
+      "case_id": "fixture-5-multiple",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "multiple",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-5-multiple",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "multiple",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": true,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "case_id": "fixture-5-multiple",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "multiple",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract",
+        "classify"
+      ],
+      "expected_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted_categories": [
+        "extraction",
+        "misclassification"
+      ],
+      "predicted": [
+        "extract",
+        "classify"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-timeout",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "timeout",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-timeout",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "timeout",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-timeout",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "timeout",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-timeout",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "timeout",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-timeout",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "timeout",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-schema",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "schema",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-schema",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "schema",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-schema",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "schema",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-schema",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "schema",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-schema",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "schema",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "schema"
+      ],
+      "predicted_categories": [
+        "schema"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-missing_judge",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "missing_judge",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-missing_judge",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "missing_judge",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-missing_judge",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "missing_judge",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-missing_judge",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "missing_judge",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-missing_judge",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "missing_judge",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-false_allegation",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "false_allegation",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-false_allegation",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "false_allegation",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": false,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-false_allegation",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "false_allegation",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-false_allegation",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "false_allegation",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-false_allegation",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "false_allegation",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-contradiction",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "contradiction",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-contradiction",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "contradiction",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": false,
+      "exact": 0,
+      "precision": 0.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-contradiction",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "contradiction",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-contradiction",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "contradiction",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-contradiction",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "contradiction",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": true,
+      "eligible": false,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-partial",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "partial",
+      "analyzer": "graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-partial",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "partial",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "extraction"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-partial",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "partial",
+      "analyzer": "technical_rules",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-partial",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "partial",
+      "analyzer": "ablation_no_source",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-partial",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "partial",
+      "analyzer": "ablation_no_graph",
+      "expected": [
+        "extract"
+      ],
+      "expected_categories": [
+        "technical"
+      ],
+      "predicted_categories": [
+        "technical"
+      ],
+      "predicted": [
+        "extract"
+      ],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-low_confidence_correct",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "low_confidence_correct",
+      "analyzer": "graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-low_confidence_correct",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "low_confidence_correct",
+      "analyzer": "legacy_reverse_scan",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-low_confidence_correct",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "low_confidence_correct",
+      "analyzer": "technical_rules",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-low_confidence_correct",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "low_confidence_correct",
+      "analyzer": "ablation_no_source",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    {
+      "case_id": "fixture-5-low_confidence_correct",
+      "family": "synthetic-family-5",
+      "split": "test",
+      "scenario": "low_confidence_correct",
+      "analyzer": "ablation_no_graph",
+      "expected": [],
+      "expected_categories": [],
+      "predicted_categories": [],
+      "predicted": [],
+      "abstained": false,
+      "eligible": true,
+      "exact": 1,
+      "precision": 1.0,
+      "recall": 1.0
+    }
+  ]
+}

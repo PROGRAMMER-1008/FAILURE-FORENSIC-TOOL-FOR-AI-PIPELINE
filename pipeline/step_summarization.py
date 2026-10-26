@@ -37,7 +37,7 @@ def summarize_document(
     classification: ClassificationResult,
 ) -> SummaryResult:
     entities_str = "\n".join(
-        f"- {e.entity_type}: {e.name}" for e in extraction.entities
+        f"- {e.entity_type}: {e.name} = {e.value}" for e in extraction.entities
     ) or "(no entities were extracted)"
 
     user_prompt = f"""Original document:

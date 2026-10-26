@@ -1,0 +1,49 @@
+1
+00:00:00,209 --> 00:00:05,326
+Failure Forensics | Trace the mistake, not just the final answer
+A real app walkthrough using an invented invoice and a deliberately injected error.
+
+2
+00:00:05,326 --> 00:00:12,266
+01 / Start with a document
+The source says 814 EUR. This synthetic example deliberately extracts 999 EUR.
+
+3
+00:00:12,266 --> 00:00:17,314
+02 / A finished run can still contain a wrong answer
+Processing status and content quality are kept separate. Findings remain hypotheses.
+
+4
+00:00:17,314 --> 00:00:23,399
+03 / Follow the actual dependencies
+Extraction and classification branch independently. The summary uses both and the source.
+
+5
+00:00:23,399 --> 00:00:29,926
+04 / Compare evidence with the output
+Source: 814 EUR. Extracted fact: 999 EUR. The suspected starting point is visible.
+
+6
+00:00:29,926 --> 00:00:34,644
+05 / Human review stays in control
+Confirm, correct or mark a finding as uncertain. No label is silently treated as ground truth.
+
+7
+00:00:34,644 --> 00:00:41,189
+06 / Change one fact, then test the result
+Correct 999 to 814 using a normal input. Keep the original run intact.
+
+8
+00:00:41,189 --> 00:00:47,737
+07 / Inspect what changed
+The replay updates affected steps. A changed result is evidence to investigate, not proof of causality.
+
+9
+00:00:47,737 --> 00:00:52,778
+08 / Turn reviewed examples into repeatable evaluation
+Save reviewed cases in versioned datasets. The demo measures mechanics, not real-model accuracy.
+
+10
+00:00:52,778 --> 00:00:57,640
+Built with React, TypeScript, FastAPI and SQLAlchemy
+Groq / local Ollama adapters â€¢ durable tracing â€¢ evidence review â€¢ controlled replay

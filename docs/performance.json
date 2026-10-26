@@ -1,0 +1,25 @@
+{
+  "mode": "in-process ASGI fake-infrastructure",
+  "seeded_summaries": 10000,
+  "source_characters_per_run": 1010,
+  "requests": 200,
+  "concurrency": 4,
+  "elapsed_seconds": 2.644060599999648,
+  "errors": 0,
+  "requests_started_during_job": 75,
+  "concurrent_job": "fake provider with 250ms injected per-call latency",
+  "p50_ms": 42.51584999929037,
+  "p95_ms": 89.96879999904195,
+  "p99_ms": 132.3257999993075,
+  "peak_python_tracked_bytes": 2735391,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+  "logical_cpus": 20,
+  "database": "SQLite",
+  "limitations": [
+    "In-process HTTP transport; not network/TLS production load",
+    "Concurrent synthetic worker only; no real inference load",
+    "Python allocation peak excludes native memory and OS cache",
+    "No throughput SLA inferred; no timing CI threshold"
+  ]
+}

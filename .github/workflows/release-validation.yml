@@ -1,0 +1,13 @@
+name: Manual release validation (no publication)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    environment: release-approval
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t failure-forensics:release-candidate .
+      - run: echo "Image built locally in CI only. Publication/deployment requires separate owner authorization."

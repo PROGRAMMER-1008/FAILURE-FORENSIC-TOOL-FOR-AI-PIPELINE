@@ -1,0 +1,52 @@
+[
+  {
+    "seconds": 0.209,
+    "title": "Failure Forensics | Trace the mistake, not just the final answer",
+    "text": "A real app walkthrough using an invented invoice and a deliberately injected error."
+  },
+  {
+    "seconds": 5.326,
+    "title": "01 / Start with a document",
+    "text": "The source says 814 EUR. This synthetic example deliberately extracts 999 EUR."
+  },
+  {
+    "seconds": 12.266,
+    "title": "02 / A finished run can still contain a wrong answer",
+    "text": "Processing status and content quality are kept separate. Findings remain hypotheses."
+  },
+  {
+    "seconds": 17.314,
+    "title": "03 / Follow the actual dependencies",
+    "text": "Extraction and classification branch independently. The summary uses both and the source."
+  },
+  {
+    "seconds": 23.399,
+    "title": "04 / Compare evidence with the output",
+    "text": "Source: 814 EUR. Extracted fact: 999 EUR. The suspected starting point is visible."
+  },
+  {
+    "seconds": 29.926,
+    "title": "05 / Human review stays in control",
+    "text": "Confirm, correct or mark a finding as uncertain. No label is silently treated as ground truth."
+  },
+  {
+    "seconds": 34.644,
+    "title": "06 / Change one fact, then test the result",
+    "text": "Correct 999 to 814 using a normal input. Keep the original run intact."
+  },
+  {
+    "seconds": 41.189,
+    "title": "07 / Inspect what changed",
+    "text": "The replay updates affected steps. A changed result is evidence to investigate, not proof of causality."
+  },
+  {
+    "seconds": 47.737,
+    "title": "08 / Turn reviewed examples into repeatable evaluation",
+    "text": "Save reviewed cases in versioned datasets. The demo measures mechanics, not real-model accuracy."
+  },
+  {
+    "seconds": 52.778,
+    "title": "Built with React, TypeScript, FastAPI and SQLAlchemy",
+    "text": "Groq / local Ollama adapters • durable tracing • evidence review • controlled replay"
+  }
+]

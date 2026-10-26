@@ -1,0 +1,52 @@
+[
+  {
+    "seconds": 0.148,
+    "title": "Failure Forensics | Real AI, visible evidence",
+    "text": "A live Groq walkthrough using an invented invoice. No synthetic error injection."
+  },
+  {
+    "seconds": 4.753,
+    "title": "01 / Give the AI a document",
+    "text": "The invoice says 814 EUR. The cloud provider processes this invented sample."
+  },
+  {
+    "seconds": 9.812,
+    "title": "02 / Watch the real pipeline run",
+    "text": "Groq extracts facts, classifies the document and generates a summary."
+  },
+  {
+    "seconds": 23.383,
+    "title": "03 / Inspect the result before trusting it",
+    "text": "Automated findings are suggestions. Compare the outputs against the original source."
+  },
+  {
+    "seconds": 28.908,
+    "title": "04 / Follow each dependency",
+    "text": "Select a step to see its recorded AI output and execution evidence."
+  },
+  {
+    "seconds": 33.99,
+    "title": "Inspect / Extract facts",
+    "text": "These are recorded Groq responses for this document, not fixed demo outputs."
+  },
+  {
+    "seconds": 40.041,
+    "title": "Inspect / Classify document",
+    "text": "These are recorded Groq responses for this document, not fixed demo outputs."
+  },
+  {
+    "seconds": 46.133,
+    "title": "Inspect / Summarize",
+    "text": "These are recorded Groq responses for this document, not fixed demo outputs."
+  },
+  {
+    "seconds": 52.235,
+    "title": "05 / Keep human judgment explicit",
+    "text": "Review the evidence, record uncertainty, and test corrections when appropriate."
+  },
+  {
+    "seconds": 57.515,
+    "title": "Failure Forensics | Built to investigate AI pipelines",
+    "text": "Live Groq model: openai/gpt-oss-20b. One example is not an accuracy benchmark."
+  }
+]

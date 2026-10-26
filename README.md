@@ -1,113 +1,133 @@
 # Failure Forensics
 
-An observability and root-cause analysis tool for multi-step AI pipelines — built entirely on free, local infrastructure. When a multi-step LLM pipeline produces a bad output, most teams have no idea which step broke it. This tool traces every step, runs independent LLM-as-judge review, performs backward root-cause analysis, and grows a permanent, human-verified eval dataset from its own real failures.
+A local document-pipeline investigation console: inspect truthful attempts, evidence-backed diagnosis hypotheses, human reviews and controlled replays. **Development preview, not production-ready.**
 
-Runs 100% locally on [Ollama](https://ollama.com) — no paid API keys required.
+The v2 application lives in `ffv2/` and `frontend/`. Original pipeline modules remain available for compatibility and the legacy analyzer baseline. Original README: [legacy notes](docs/legacy-readme.md). Detailed acceptance gaps: [implementation status](docs/implementation-status.md).
 
----
+## Watch the real AI walkthrough
 
-## The problem
+[![Watch the Groq walkthrough](launch/groq-video-cover.png)](https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE/blob/main/launch/failure-forensics-groq-demo.mp4)
 
-Imagine a document goes through a 4-step pipeline: intake, entity extraction, classification, summarization. The final output is wrong. **Which step broke it?**
+[Watch or download the 62-second Groq video](https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE/raw/refs/heads/main/launch/failure-forensics-groq-demo.mp4). It uses a real Groq call with an invented invoice, with no injected error. Extraction returned **814 EUR** and classification returned **invoice**. The summary evaluator's citations failed validation, so the app kept the assessment **inconclusive**. One example is not an accuracy benchmark.
 
-In traditional software you'd read a stack trace. In an LLM pipeline, nothing crashes — the code "worked," the output is just silently wrong, and any step could be the culprit. This project answers "where did this go wrong?" the way a proper observability system would: by recording every step ("spans"), independently reviewing each one, and walking backward from the bad output to find the first genuine point of failure.
+The full application runs locally with your own Groq key or Ollama. There is currently no publicly hosted full AI service. See the [deployment readiness checklist](docs/deployment-readiness.md) for what remains.
 
-## What it does
+## Easy local setup (Windows)
 
-- **Traced 3-step pipeline** — extraction → classification → summarization, each step isolated and typed (Pydantic), each call recorded as a span (input, output, confidence, latency, raw response)
-- **Independent LLM-as-judge review** — a separate model call reviews each span's input/output pair without seeing the step's own reasoning, checking specifically for invented content, placeholder-as-data errors, missing information, contradictions, and over-confident framing
-- **Backward root-cause analysis** — walks a trace backward from the final step, using judge scores and self/judge disagreement as evidence, to find the first genuine point of failure and classify it into a failure taxonomy (extraction hallucination, misclassification, propagation error, prompt failure, context loss, placeholder-as-data)
-- **Human-in-the-loop review** — every analyzer diagnosis is a draft, not a verdict. A human confirms, corrects, or marks it unclear directly in the web UI; confirmed/corrected cases become permanent eval cases
-- **Growing eval dataset** — every human-reviewed failure becomes a labeled regression test case, generated from real pipeline behavior rather than hand-written guesses
-- **Live document analysis** — upload a `.txt`, `.pdf`, or `.docx` file and watch it move through the full pipeline in real time, rendered as an animated node graph
-- **Full web UI** — case overview, trace explorer with per-span evidence, live analysis, and the eval dataset, all reading from the same SQLite + JSON storage layer
+For a fresh clone, install Git, [uv](https://docs.astral.sh/uv/getting-started/installation/) and Node.js 22.22.2. Then run from PowerShell:
 
-## A real bug I found and fixed
-
-While testing on a real invoice (not a synthetic sample), the judge confidently — and wrongly — flagged genuine invoice fields as "invented," including the country name and the invoice's own total amount, even scoring one span as low as 2/5 with a fabricated justification.
-
-Root cause, on inspection: the judge was never shown the original source document during summarization review — only a truncated, comma-joined string of previously extracted entities. It had no way to verify a claim against the real text, only against an already-lossy secondhand summary. A second bug compounded this: extraction's output was silently truncated at 200 characters before being shown to the judge at all, meaning entities from longer documents were being cut out of the judge's view entirely.
-
-Fix: the judge now receives the full, untruncated original document alongside a clearly structured (not truncated, not comma-joined) list of extracted entities, plus an explicit instruction to treat table/form/address-block content as equally "stated" as prose. Re-tested against the exact invoice that exposed the bug — the false accusations disappeared and the judge correctly began catching a genuine issue instead (a placeholder bank sort code, `00-00-00`, being treated as real data).
-
-## Known limitations
-
-- **The judge runs on the same model class as the pipeline itself** (`llama3.1:8b` reviewing `llama3.1:8b`), not a stronger reviewer model. This is a real, measured limitation, not a hypothetical one — self-reported confidence has been observed to vary between identical runs of the same document, and the judge has been caught making a confident, well-articulated diagnosis that didn't match its own numeric score. Human review exists specifically because of this.
-- **Category correction is single-label.** Some human corrections are really about judge-reasoning accuracy rather than the pipeline step itself; the current taxonomy doesn't fully capture that nuance.
-- **No OCR.** Scanned or image-based PDFs won't extract text and will return a clear error rather than a silent failure.
-- **Live analysis progress is an honest approximation.** A single HTTP request can't report which server-side step is currently running without websocket/SSE plumbing; the UI advances an estimated timeline rather than true step-by-step telemetry, and only reaches its real final state once the actual response returns.
-
-## Architecture
-
-```
-Document (.txt / .pdf / .docx)
-        │
-        ▼
-   Intake ──▶ Extraction ──▶ Classification ──▶ Summarization
-        │           │               │                 │
-        └───────────┴───────────────┴─────────────────┘
-                          │
-                    Traced Spans (SQLite + JSON)
-                          │
-                 Independent LLM Judge
-                          │
-              Backward Root-Cause Analyzer
-                          │
-                 Human Review (confirm / correct / unclear)
-                          │
-                 Growing Eval Dataset
+```powershell
+git clone https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE.git
+cd FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE
+uv sync --frozen
+npm --prefix frontend ci
+npm --prefix frontend run build
+if (!(Test-Path .env)) { Copy-Item .env.example .env }
+.\start-local.cmd
 ```
 
-## Tech stack
+After first-time setup, double-click `start-local.cmd`. It loads your local configuration, migrates the selected database, and starts the API and worker. Open http://127.0.0.1:8001. Keep the terminal open; Ctrl+C stops the services. The default fake provider lets you explore without a key. Do not overwrite an existing `.env`.
 
-| Component | Choice |
-|---|---|
-| LLM runtime | Ollama, `llama3.1:8b` (local, free) |
-| Pipeline & typing | Python, Pydantic |
-| Storage | SQLite (index) + JSON (full trace detail) |
-| Backend API | FastAPI |
-| Frontend | Vanilla HTML/CSS/JS (no framework) |
-| File parsing | `pypdf`, `python-docx` |
+When ready for real AI, edit `.env` locally:
 
-## Setup
-
-**1. Install Ollama** from [ollama.com](https://ollama.com), then pull the model:
-```bash
-ollama pull llama3.1:8b
+```dotenv
+FF_PROVIDER=groq
+FF_GROQ_API_KEY=your-key-goes-here
 ```
 
-**2. Install Python dependencies:**
-```bash
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
+Keep the configured producer/judge model identifiers or choose models available to your Groq account. Save and restart the launcher. Settings & status shows whether the key is present; presence does not mean authentication was verified. Missing-key mode allows browsing but blocks new AI work. Submitted content goes to Groq and uses your quota. Never send the key in chat or commit `.env`.
+
+The launcher uses `data/local-ai.db` with the supplied template. The older synthetic and Groq preview databases remain intact. Process environment variables override file values. Direct API/worker commands below remain environment-only; use the launcher when you want `.env` support.
+
+## Run locally without a GPU or API key
+
+Prerequisites: uv, Python 3.12.10 (uv can install it), Node 22.22.2. Do not execute the old `forensic/` environment.
+
+```powershell
+uv sync --frozen
+npm --prefix frontend ci
+npm --prefix frontend run build
+uv run python -m alembic upgrade head
+uv run python -m uvicorn ffv2.api:app --host 127.0.0.1 --port 8000 --no-access-log
 ```
 
-**3. Run the web app:**
-```bash
-uvicorn webui.server:app --reload --port 8000
-```
-Open **http://localhost:8000**
+In a second terminal, from the repository root:
 
-**4. (Optional) Run the pipeline from the command line** instead of the UI:
-```bash
-python test_judge.py            # run pipeline + judge on sample docs
-python test_root_cause.py       # backward root-cause analysis on saved traces
-python review_traces.py         # interactive human review (CLI version)
-python view_eval_dataset.py     # view the growing eval dataset
+```powershell
+uv run python -m ffv2.worker
 ```
 
-## Project structure
+Open [the local console](http://127.0.0.1:8000), choose **New investigation → Load invented invoice → Queue investigation**. The default fake provider deliberately supports synthetic mechanics, not arbitrary-document understanding. The sample's extraction can inject `999 EUR` while the source says `814 EUR`. Diagnosis identifies extraction as a suspected origin and summarization as an observed propagated symptom.
 
+Review the diagnosis, optionally provide gold output, then re-execute with corrected extraction. The original remains intact; only affected descendants are rerun. No real-model quality or causal improvement is implied by this injected demonstration.
+
+## Local Ollama
+
+Install/run Ollama separately and provision your chosen model yourself. No model downloads happen during tests/builds.
+
+```powershell
+$env:FF_PROVIDER='ollama'
+$env:FF_PRODUCER_MODEL='your-installed-model'
+$env:FF_JUDGE_MODEL='your-installed-judge-model'
 ```
-failure-forensics/
-├── pipeline/           # core pipeline: models, LLM client, steps, tracing, storage
-├── analysis/           # judge + backward root-cause analyzer
-├── webui/              # FastAPI backend + single-page frontend
-├── data/                # SQLite db + JSON traces (generated at runtime)
-└── test_*.py            # standalone test/demo scripts for each component
+
+Set the same configuration in API and worker terminals before starting them. Source content is sent to the configured local Ollama endpoint. Same-model judging can have correlated errors. There is no cloud fallback. Real Ollama execution was not validated in this implementation session.
+
+## What is implemented
+
+- Versioned tracing envelopes, actual dependency graph, strict schema errors, sanitized literal responses, partial-run checkpoints.
+- Canonical SQLAlchemy relational persistence and explicit Alembic migration; local SQLite and PostgreSQL queue support.
+- Durable claims, leases/fencing, bounded retry, real SSE events, cancellation and idempotent submissions.
+- React console with source/attempt/evidence inspection, append-only human reviews and re-execution interventions.
+- Bounded document uploads including DOCX tables, parser isolation/deadline, source-context rejection rather than silent truncation.
+- Dry-run legacy import, stable IDs, immutable feedback dataset snapshots, synthetic benchmark, SQLite backup/restore and deletion tooling.
+- Read-only demo boundary; single-owner trusted-proxy authentication boundary for private mode (real OIDC deployment unverified).
+
+## Verification
+
+![Synthetic investigation console](docs/screenshots/investigation-wide.png)
+
+Screenshots contain only the invented sample. A [narrow-layout capture](docs/screenshots/investigation-narrow.png) is also available.
+
+```powershell
+uv run pytest
+uv run ruff check
+uv run ruff format --check
+uv run mypy
+uv run python scripts/scan_secrets.py
+uv run python -m ffv2.benchmark
+npm --prefix frontend run lint
+npm --prefix frontend test
+npm --prefix frontend run build
 ```
 
-## Why this project exists
+Browser tests require a running synthetic API/worker and Playwright Chromium. Disable shared-cache cleanup before installing:
 
-Most AI portfolio projects generate answers. This one catches bad ones — and is honest about the fact that its own quality-control layer has real, documented blind spots, which is exactly why a human review step is built into the architecture rather than bolted on as an afterthought.
+```powershell
+$env:PLAYWRIGHT_SKIP_BROWSER_GC='1'
+npm --prefix frontend exec -- playwright install chromium
+npm --prefix frontend run e2e
+```
+
+PostgreSQL tests require `FF_TEST_DATABASE_URL` pointing to a **disposable** database. They skip with a reason otherwise. SQLite tests do not establish PostgreSQL concurrency behavior. The session also ran the PostgreSQL claim/fencing test separately and built/smoke-tested a local container.
+
+See [configuration](docs/configuration.md), [architecture](docs/architecture.md), [migration](docs/migration.md), [deployment](docs/deployment.md), [runbook](docs/runbook.md), [security](docs/security.md), and [evaluation](docs/evaluation.md).
+
+No services have been published or deployed. Direct service commands do not auto-load `.env`; the explicit local launcher reads it when you run it. Supply process variables deliberately; never put secrets in frontend variables. No license has been selected on the owner's behalf.
+
+## Groq cloud API
+
+From a PowerShell terminal in this repository, run:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/start_groq.py
+```
+
+The launcher asks for a model (default `openai/gpt-oss-20b`) and then your API key in a hidden prompt. It never reads .env or saves the key to a file; child processes receive it in their environment. Open http://127.0.0.1:8001 and keep the terminal open. Ctrl+C stops both services. The separate database is data/groq-preview.db; the synthetic preview on port 8000 is unaffected.
+
+Submitting a document sends redacted text and intermediate outputs to Groq. A successful three-step run normally makes six calls (three generation, three evaluation); bounded retries may add calls. Account quotas and charges apply. Same-model evaluation may have correlated errors. JSON object mode is locally validated against the pipeline contracts; valid JSON is not a guarantee of correct facts or schema compliance. HTTP authentication/rate-limit/provider failures are sanitized as provider_error; there is no fallback. Live Groq acceptance has not been run without a user-configured credential.
+
+For manual startup, set FF_PROVIDER=groq, FF_GROQ_API_KEY, FF_PRODUCER_MODEL and FF_JUDGE_MODEL in both process environments. Never put the API key in frontend variables or source files. The model must be available to your Groq account.
+
+API reference: https://console.groq.com/docs/api-reference
+Model availability: https://console.groq.com/docs/models

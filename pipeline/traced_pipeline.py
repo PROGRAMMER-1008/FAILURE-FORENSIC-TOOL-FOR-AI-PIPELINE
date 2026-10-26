@@ -54,7 +54,7 @@ def _full_entities_text(entities) -> str:
     """
     if not entities:
         return "(no entities extracted)"
-    return "\n".join(f"- {e.entity_type}: {e.name}" for e in entities)
+    return "\n".join(f"- {e.entity_type}: {e.name} = {e.value}" for e in entities)
 
 
 def run_traced_pipeline(doc_id: str, raw_text: str) -> Trace:
