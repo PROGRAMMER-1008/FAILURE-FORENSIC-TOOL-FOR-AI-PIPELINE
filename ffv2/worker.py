@@ -9,6 +9,7 @@ from ffv2.diagnosis import analyze, assess
 from ffv2.models import Attempt, Citation, Envelope, Issue, Judgment, now, uid
 from ffv2.providers import FakeProvider, Provider, configured_provider, execute
 from ffv2.settings import Settings
+from ffv2.limits import BudgetedProvider
 from ffv2.store import LostLease, Store
 from ffv2.tracer import Tracer
 
@@ -62,6 +63,10 @@ def run_one(store: Store, settings: Settings, provider: Provider | None = None) 
             '{"entities":[{"name":"Total","value":"999 EUR","entity_type":"amount"}],"confidence":5}'
         )
     judge = configured_provider(settings, judge=True) if settings.provider != "fake" else None
+    if settings.provider == "groq":
+        provider = BudgetedProvider(provider, store.engine, settings.groq_daily_calls)
+        if judge:
+            judge = BudgetedProvider(judge, store.engine, settings.groq_daily_calls)
     run.status = "running"
     # Mark unfinished calls as interrupted before restarting. Never erase old attempts.
     for a in run.attempts:

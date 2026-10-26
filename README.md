@@ -10,7 +10,7 @@ The v2 application lives in `ffv2/` and `frontend/`. Original pipeline modules r
 
 [Watch or download the 62-second Groq video](https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE/raw/refs/heads/main/launch/failure-forensics-groq-demo.mp4). It uses a real Groq call with an invented invoice, with no injected error. Extraction returned **814 EUR** and classification returned **invoice**. The summary evaluator's citations failed validation, so the app kept the assessment **inconclusive**. One example is not an accuracy benchmark.
 
-The full application runs locally with your own Groq key or Ollama. There is currently no publicly hosted full AI service. See the [deployment readiness checklist](docs/deployment-readiness.md) for what remains.
+The full application runs locally with your own Groq key or Ollama. The full single-owner app can be deployed using the [Render guide](docs/render-deployment.md). No full Render service is live yet; account setup and paid-resource approval remain. See the [deployment readiness checklist](docs/deployment-readiness.md).
 
 ## Easy local setup (Windows)
 
@@ -81,7 +81,8 @@ Set the same configuration in API and worker terminals before starting them. Sou
 - React console with source/attempt/evidence inspection, append-only human reviews and re-execution interventions.
 - Bounded document uploads including DOCX tables, parser isolation/deadline, source-context rejection rather than silent truncation.
 - Dry-run legacy import, stable IDs, immutable feedback dataset snapshots, synthetic benchmark, SQLite backup/restore and deletion tooling.
-- Read-only demo boundary; single-owner trusted-proxy authentication boundary for private mode (real OIDC deployment unverified).
+- Hosted owner sign-in with revocable sessions, shared request budgets and Linux parser resource limits.
+- Render web/worker/PostgreSQL Blueprint; read-only demo and optional trusted-proxy/OIDC boundaries.
 
 ## Verification
 

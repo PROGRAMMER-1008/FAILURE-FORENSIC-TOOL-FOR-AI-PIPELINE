@@ -9,6 +9,7 @@ from ffv2.models import CONTRACTS, Envelope
 from ffv2.privacy import redact
 from ffv2.settings import Settings
 from ffv2.observability import operation
+from ffv2.limits import BudgetExceeded
 
 
 class Provider(Protocol):
@@ -105,7 +106,7 @@ class GroqProvider:
                 json={
                     "model": self.model,
                     "temperature": 0,
-                    "max_completion_tokens": 4096,
+                    "max_completion_tokens": self.settings.groq_max_completion_tokens,
                     "response_format": {"type": "json_object"},
                     "messages": [
                         {
@@ -153,6 +154,8 @@ def execute(
         parsed = json.loads(raw)
         result.output = redact(CONTRACTS[step].model_validate(parsed).model_dump(mode="json"))
         result.status = "succeeded"
+    except BudgetExceeded:
+        result.error = "budget_exceeded"
     except (TimeoutError, httpx.TimeoutException):
         result.error = "timeout"
     except (ConnectionError, httpx.ConnectError):

@@ -1,6 +1,5 @@
 import asyncio
 import json
-import time
 from datetime import datetime
 from pathlib import Path
 from uuid import UUID
@@ -18,6 +17,9 @@ from ffv2.datasets import FreezeRequest, freeze
 from ffv2.models import Model, ReviewInput, Run, uid
 from ffv2.privacy import fingerprint, redact
 from ffv2.replay import ReplayRequest, replay
+from ffv2.limits import reserve
+from ffv2.auth import gate
+from ffv2.db import usage_windows, owner_sessions
 from ffv2.settings import Settings
 from ffv2.store import Conflict, Missing, Store
 from ffv2.uploads import DocumentError, isolated_extract
@@ -72,25 +74,20 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
         }
     )
     app = FastAPI(title="Failure Forensics", version="2.0.0")
+    parser_slot = asyncio.Semaphore(1)
     app.add_middleware(BodyLimit, maximum=settings.max_upload_bytes)
-    request_times: dict[str, list[float]] = {}
 
     @app.middleware("http")
     async def boundary(request: Request, call_next):
         request_id = uid()
         peer_key = request.client.host if request.client else "unknown"
-        current = time.monotonic()
-        if request.method not in {"GET", "HEAD", "OPTIONS"}:
-            recent = [t for t in request_times.get(peer_key, []) if current - t < 60]
-            if len(recent) >= 30:
-                return JSONResponse(
-                    {"error": "mutation_rate_limit", "request_id": request_id},
-                    429,
-                    headers={"Retry-After": "60"},
-                )
-            if len(request_times) > 1000:
-                request_times.clear()
-            request_times[peer_key] = recent + [current]
+        if settings.mode == "hosted":
+            try:
+                auth_response = await gate(request, settings, store.engine)
+            except Exception:
+                return JSONResponse({"error": "authentication_unavailable"}, 503)
+            if auth_response is not None:
+                return auth_response
         if settings.mode == "private" and request.url.path != "/health/live":
             peer = request.client.host if request.client else ""
             if peer not in settings.trusted_proxy_ips:
@@ -108,6 +105,24 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
                 return JSONResponse({"error": "Untrusted host"}, 403)
             if origin and origin != f"{request.url.scheme}://{request.headers.get('host')}":
                 return JSONResponse({"error": "Cross-origin request denied"}, 403)
+        if request.method not in {"GET", "HEAD", "OPTIONS"}:
+            scope = "owner" if settings.mode in {"private", "hosted"} else fingerprint(peer_key)
+            try:
+                allowed = await asyncio.to_thread(
+                    reserve,
+                    store.engine,
+                    "mutation-" + scope,
+                    settings.mutations_per_minute,
+                    60,
+                )
+            except Exception:
+                return JSONResponse({"error": "usage_controls_unavailable"}, 503)
+            if not allowed:
+                return JSONResponse(
+                    {"error": "mutation_rate_limit", "request_id": request_id},
+                    429,
+                    headers={"Retry-After": "60"},
+                )
         try:
             with operation("http_request"):
                 response = await call_next(request)
@@ -146,6 +161,8 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
         try:
             with store.engine.connect() as conn:
                 conn.execute(select(cases.c.id).limit(1))
+                conn.execute(select(usage_windows.c.key).limit(1))
+                conn.execute(select(owner_sessions.c.id).limit(1))
             return {
                 "database": "ready",
                 "provider": "not_checked" if settings.provider != "fake" else "synthetic",
@@ -169,6 +186,8 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
             if settings.provider != "fake"
             else "injected-fixture-1",
             "correlated_judge": settings.producer_model == settings.judge_model,
+            "groq_daily_calls": settings.groq_daily_calls,
+            "groq_max_completion_tokens": settings.groq_max_completion_tokens,
             "max_characters": settings.max_characters,
             "max_upload_bytes": settings.max_upload_bytes,
             "retention": "Local until explicit deletion; secret redaction is not comprehensive PII detection",
@@ -217,14 +236,21 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
         # Raw upload, not multipart: bounded middleware covers chunked bodies too.
         data = await request.body()
         try:
+            await asyncio.wait_for(parser_slot.acquire(), timeout=2)
+        except TimeoutError:
+            raise HTTPException(429, "Document parser is busy; retry shortly") from None
+        try:
             source = await asyncio.to_thread(
                 isolated_extract,
                 data,
                 request.headers.get("content-type", ""),
                 settings.max_characters,
+                settings.parser_memory_mb,
             )
         except DocumentError as exc:
             raise HTTPException(422, str(exc)) from None
+        finally:
+            parser_slot.release()
         return submit(
             Submit(text=source, idempotency_key=request.headers.get("idempotency-key", ""))
         )

@@ -27,6 +27,7 @@ ErrorKind = Literal[
     "cancelled",
     "context_overflow",
     "provider_error",
+    "budget_exceeded",
 ]
 
 

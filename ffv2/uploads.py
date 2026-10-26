@@ -65,27 +65,39 @@ def extract(data: bytes, content_type: str, max_chars: int = 20000) -> str:
         raise DocumentError("Malformed document or invalid UTF-8 encoding") from None
 
 
-def _child(connection, data, content_type, max_chars):
+def _child(connection, data, content_type, max_chars, memory_mb):
     try:
+        import sys
+
+        if sys.platform == "linux":
+            import resource
+
+            resource.setrlimit(resource.RLIMIT_AS, (memory_mb * 1024 * 1024,) * 2)
+            resource.setrlimit(resource.RLIMIT_CPU, (8, 8))
         connection.send((True, extract(data, content_type, max_chars)))
     except DocumentError as exc:
         connection.send((False, str(exc)))
+    except (MemoryError, OSError):
+        connection.send((False, "Document parser resource limit exceeded"))
     finally:
         connection.close()
 
 
-def isolated_extract(data: bytes, content_type: str, max_chars: int) -> str:
+def isolated_extract(data: bytes, content_type: str, max_chars: int, memory_mb: int = 256) -> str:
     import multiprocessing
 
     context = multiprocessing.get_context("spawn")
     parent, child = context.Pipe(duplex=False)
-    process = context.Process(target=_child, args=(child, data, content_type, max_chars))
+    process = context.Process(target=_child, args=(child, data, content_type, max_chars, memory_mb))
     process.start()
     child.close()
     try:
         if not parent.poll(10):
             raise DocumentError("Document parser deadline exceeded")
-        ok, result = parent.recv()
+        try:
+            ok, result = parent.recv()
+        except EOFError:
+            raise DocumentError("Document parser stopped within resource limits") from None
         if not ok:
             raise DocumentError(result)
         return result

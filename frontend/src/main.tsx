@@ -65,6 +65,8 @@ type Config = {
   correlated_judge: boolean;
   sample: string;
   max_characters: number;
+  groq_daily_calls: number;
+  groq_max_completion_tokens: number;
   retention: string;
 };
 const terminal = (status: string) =>
@@ -81,6 +83,10 @@ export async function api<T>(path: string, body?: unknown): Promise<T> {
         },
   );
   const result = await response.json();
+  if (response.status === 401 && result.error === "sign_in_required") {
+    window.location.assign("/auth/login");
+    throw new Error("Your session expired. Please sign in again.");
+  }
   if (!response.ok)
     throw new Error(
       result.error || result.detail || `Request failed (${response.status})`,
@@ -280,6 +286,7 @@ function App() {
             Certainty earned.
           </small>
         </div>
+        {config?.mode === "hosted" && <a href="/auth/logout">Sign out</a>}
       </aside>
       <main id="main">
         <header>
@@ -981,7 +988,9 @@ function App() {
             <section className="workflow-guide">
               <p className="eyebrow">CONNECT YOUR AI</p>
               <h2>Groq setup in three steps</h2>
-              <ol>
+              {config?.mode === "hosted" ? (
+                <p>Manage your Groq key in Render's secret environment settings, then redeploy the web service and worker. Never enter the key in this browser.</p>
+              ) : <ol>
                 <li>
                   Open the project's <code>.env</code> file in your own editor.
                 </li>
@@ -995,7 +1004,7 @@ function App() {
                   <code>start-local.cmd</code> again. Open{" "}
                   <a href="http://127.0.0.1:8001">localhost:8001</a>.
                 </li>
-              </ol>
+              </ol>}
               <p>
                 Credential status:{" "}
                 <strong>
@@ -1012,6 +1021,11 @@ function App() {
                 makes up to six generation/evaluation calls before retries; your
                 account quota applies.
               </p>
+              {config?.provider === "groq" && <p>
+                This workspace allows up to {config.groq_daily_calls} AI calls per UTC day,
+                including evaluation and retries. Each response is capped at {config.groq_max_completion_tokens} output tokens.
+                These limits do not set a monetary spending cap on your Groq account.
+              </p>}
               <p>
                 To try the workflow without AI, use{" "}
                 <code>FF_PROVIDER=fake</code>. To change models, edit{" "}
@@ -1039,11 +1053,9 @@ function App() {
                   correlated.
                 </p>
               )}
-              <p>
-                Private mode requires a trusted authentication proxy and one
-                allowed identity. Real OIDC deployment validation is pending. No
-                cloud fallback.
-              </p>
+              <p>{config?.mode === "hosted"
+                ? "This is your private owner workspace. Sessions expire after one hour by default. Sign out when finished; do not share your workspace password."
+                : "Private proxy mode requires a trusted authentication proxy and one allowed identity. Hosted owner mode uses the built-in sign-in. There is no cloud fallback."}</p>
             </section>
           </>
         )}

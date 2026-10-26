@@ -1,23 +1,21 @@
 # Full-service deployment readiness
 
-As of 26 October 2026, the local application and a real Groq workflow work. The complete hosted service is **not yet release-ready**. Share the repository and real AI video while the remaining deployment checks are completed.
+As of 26 October 2026, the local app and real Groq workflow work. The repository now includes a protected single-owner hosted application and a validated Render Blueprint. Actual Render deployment has not been performed.
 
-## Verified
+## Implemented and locally verified
 
-- Durable API/worker processing, tracing, human review, controlled replay and dataset mechanics have automated local coverage.
-- Local Groq producer calls completed extraction, classification and summarization on an invented invoice. Invalid evaluator citations were rejected and quality stayed inconclusive.
-- Frontend production build, component tests and browser evidence are documented in implementation-status.md.
-- GitHub CI passed for release commit `3e9dedc`: backend with PostgreSQL queue validation, frontend, container build/migration/readiness, and browser workflows. Existing sample websites are not the full backend.
+- Single-owner login with password hashing, server-side session storage, expiry, logout/password-rotation revocation, origin checks and shared brute-force limiting. Browser test uses real HTTPS and verifies old-session rejection.
+- Shared database-backed mutation and Groq request budgets, with bounded completion tokens. Limits persist across API/worker restarts; they are not a monetary spending guarantee.
+- Linux parser CPU/address-space limits and per-process parser concurrency control, plus existing input-size and wall-time limits.
+- Render web/worker/database configuration, explicit migration, worker startup gating, private database network and secret inputs. Official Render Blueprint schema check passed.
+- Backend, frontend and type/lint checks are recorded in implementation-status.md. CI now includes PostgreSQL restore/comparison, concurrent budgets, container readiness and HTTPS browser tests; see the latest verification log for results.
 
-## Required before a hosted release
+## Required external deployment steps
 
-1. Complete a PostgreSQL backup-restore drill and restart/rollback checks on the intended host. GitHub CI has now passed final-tree container build/readiness and PostgreSQL queue tests; local Docker remains unavailable.
-2. Select an API/long-running-worker host and private persistent PostgreSQL service. The Vercel static site alone does not host this architecture. No paid infrastructure has been authorized.
-3. Configure and test TLS and the trusted OIDC proxy with a real account. Current private mode is single-owner; public multi-user workspaces and per-user data isolation are not implemented.
-4. Enforce account usage budgets and shared rate limits before allowing visitors to consume the owner's Groq quota. Current mutation limits are process-local.
-5. Validate resource limits for uploads/parsers, private backups, restore, secret injection, monitoring and rollback on the selected host.
-6. Run authenticated end-to-end checks, including session expiry, identity-header spoofing, tenant/workspace boundaries as applicable, cancellation and restart recovery.
+1. Authorize Render's paid persistent web/worker/database plans after reviewing the account quote. No paid resources have been created.
+2. Connect the repository in the owner's Render account, enter the Groq key and generated owner-password hash directly in secret settings, and deploy the same tested commit to web and worker.
+3. Verify the actual Render HTTPS origin, authenticated Groq run, restart recovery, new-database restore, retention, monitoring and alert recipients. CI cannot certify these account-specific operations.
 
-A private single-owner deployment and a publicly usable multi-user product have different acceptance criteria. Do not bypass private-mode checks or put the Groq key into a browser bundle to make a public demo appear complete.
+Use [the Render deployment guide](render-deployment.md). The current product is a private owner workspace, not a public multi-tenant SaaS. Do not share the owner password with visitors. The optional legacy OIDC proxy integration is not required by built-in hosted mode and remains an independently configured path.
 
-Real model accuracy, judge independence and human agreement also remain unmeasured; successful execution does not establish those claims.
+Independent human agreement and real-model accuracy studies remain research work; no benchmark result is inferred from the synthetic tests or one real Groq example.

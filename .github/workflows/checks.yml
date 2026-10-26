@@ -28,6 +28,7 @@ jobs:
       - run: uv run pytest
         env:
           FF_TEST_DATABASE_URL: postgresql+psycopg://postgres@localhost:5432/ff_test
+          FF_PG_TEST_CONTAINER: ${{ job.services.postgres.id }}
       - run: uv run python scripts/scan_secrets.py
       - run: uv run python -m ffv2.benchmark --output /tmp/synthetic-report
   frontend:
@@ -81,6 +82,13 @@ jobs:
           api_pid=$!
           uv run python -m ffv2.worker &
           worker_pid=$!
-          trap 'kill "$api_pid" "$worker_pid"' EXIT
+          openssl req -x509 -newkey rsa:2048 -nodes -keyout /tmp/ff-key.pem -out /tmp/ff-cert.pem -days 1 -subj '/CN=localhost' >/dev/null 2>&1
+          export FF_MODE=hosted
+          export FF_PUBLIC_ORIGIN=https://127.0.0.1:18443
+          export FF_OWNER_PASSWORD_HASH="$(uv run python -c 'from ffv2.auth import password_hash; print(password_hash("test-only-hosted-browser-password"))')"
+          uv run python -m uvicorn ffv2.api:app --host 127.0.0.1 --port 18443 --ssl-keyfile /tmp/ff-key.pem --ssl-certfile /tmp/ff-cert.pem --no-access-log &
+          hosted_pid=$!
+          export FF_HOSTED_BROWSER_URL=https://127.0.0.1:18443
+          trap 'kill "$api_pid" "$worker_pid" "$hosted_pid"' EXIT
           for i in 1 2 3 4 5; do curl --fail http://127.0.0.1:8000/health/ready && break || sleep 1; done
           npm --prefix frontend run e2e

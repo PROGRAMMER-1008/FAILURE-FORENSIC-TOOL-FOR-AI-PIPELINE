@@ -19,6 +19,20 @@ from sqlalchemy import (
 from sqlalchemy.engine import Engine
 
 metadata = MetaData()
+owner_sessions = Table(
+    "owner_sessions",
+    metadata,
+    Column("id", String, primary_key=True),
+    Column("expires", Integer, nullable=False, index=True),
+    Column("revision", String, nullable=False),
+)
+usage_windows = Table(
+    "usage_windows",
+    metadata,
+    Column("key", String, primary_key=True),
+    Column("used", Integer, nullable=False),
+    Column("expires", Integer, nullable=False, index=True),
+)
 pipeline_versions = Table(
     "pipeline_versions",
     metadata,
