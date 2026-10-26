@@ -605,6 +605,7 @@ function App() {
                 <div>
                   <p className="eyebrow">{run.id}</p>
                   <h1>Investigation</h1>
+                  <a href={`/api/v1/runs/${run.id}/export`} download>Download investigation</a>
                   <p>
                     <b>{run.status}</b> execution ·{" "}
                     {run.quality.replaceAll("_", " ")}

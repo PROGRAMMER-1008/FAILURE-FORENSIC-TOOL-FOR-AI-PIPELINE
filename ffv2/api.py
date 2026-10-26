@@ -284,6 +284,18 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
     def detail(run_id: UUID):
         return store.get(str(run_id))
 
+    @app.get("/api/v1/runs/{run_id}/export")
+    def export_run(run_id: UUID):
+        assert store is not None
+        return JSONResponse(
+            {
+                "format": "failure-forensics-investigation-1",
+                "run": store.get(str(run_id)).model_dump(mode="json"),
+                "reviews": history(run_id),
+            },
+            headers={"Content-Disposition": f'attachment; filename="investigation-{run_id}.json"'},
+        )
+
     @app.post("/api/v1/runs/{run_id}/cancel", status_code=202)
     def cancel(run_id: UUID):
         store.cancel(str(run_id))

@@ -1,13 +1,11 @@
-# Paid production topology. Review Render's quoted cost before applying this Blueprint.
-# No infrastructure is provisioned merely by committing this file.
+# Free project deployment only. PostgreSQL expires after 30 days; export before expiry.
 services:
   - type: web
-    name: failure-forensics
+    name: failure-forensics-project
     runtime: docker
-    plan: 0.5c-512mb
+    plan: free
     region: oregon
-    dockerCommand: python -m ffv2.hosted web
-    preDeployCommand: python -m ffv2.hosted migrate
+    dockerCommand: python -m ffv2.hosted project
     healthCheckPath: /health/ready
     autoDeployTrigger: "off"
     envVars:
@@ -17,7 +15,7 @@ services:
         value: groq
       - key: FF_DATABASE_URL
         fromDatabase:
-          name: failure-forensics-db
+          name: failure-forensics-project-db
           property: connectionString
       - key: FF_OWNER_PASSWORD_HASH
         sync: false
@@ -31,38 +29,11 @@ services:
         value: "100"
       - key: FF_GROQ_MAX_COMPLETION_TOKENS
         value: "4096"
-  - type: worker
-    name: failure-forensics-worker
-    runtime: docker
-    plan: 0.5c-512mb
-    region: oregon
-    dockerCommand: python -m ffv2.hosted worker
-    autoDeployTrigger: "off"
-    envVars:
-      - key: FF_MODE
-        value: local
-      - key: FF_PROVIDER
-        value: groq
-      - key: FF_DATABASE_URL
-        fromDatabase:
-          name: failure-forensics-db
-          property: connectionString
-      - key: FF_GROQ_API_KEY
-        fromService:
-          name: failure-forensics
-          type: web
-          envVarKey: FF_GROQ_API_KEY
-      - key: FF_PRODUCER_MODEL
-        value: openai/gpt-oss-20b
-      - key: FF_JUDGE_MODEL
-        value: openai/gpt-oss-20b
-      - key: FF_GROQ_DAILY_CALLS
-        value: "100"
-      - key: FF_GROQ_MAX_COMPLETION_TOKENS
-        value: "4096"
+      - key: FF_PARSER_MEMORY_MB
+        value: "128"
 databases:
-  - name: failure-forensics-db
-    plan: 0.1c-256mb
+  - name: failure-forensics-project-db
+    plan: free
     region: oregon
     databaseName: forensics
     user: forensics

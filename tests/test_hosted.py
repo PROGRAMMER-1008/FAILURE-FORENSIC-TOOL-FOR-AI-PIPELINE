@@ -1,5 +1,6 @@
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
+from types import SimpleNamespace
 
 import httpx
 import pytest
@@ -83,7 +84,8 @@ def test_hosted_sessions_csrf_logout_expiry_and_rotation(store):
 
 
 @pytest.mark.enable_socket
-def test_login_limit_shared_across_instances(store):
+def test_login_limit_shared_across_instances(store, monkeypatch):
+    monkeypatch.setattr("ffv2.limits.time", SimpleNamespace(time=lambda: 1800))
     settings = hosted()
     apps = [create_app(settings, store), create_app(settings, store)]
     for i in range(10):
@@ -108,7 +110,8 @@ def test_login_limit_shared_across_instances(store):
 
 
 @pytest.mark.enable_socket
-def test_mutation_limit_survives_api_restart(store):
+def test_mutation_limit_survives_api_restart(store, monkeypatch):
+    monkeypatch.setattr("ffv2.limits.time", SimpleNamespace(time=lambda: 1800))
     for i in range(2):
         app = create_app(Settings(mutations_per_minute=2), store)
         assert request(app, "POST", "/api/v1/runs", json={}).status_code == 422

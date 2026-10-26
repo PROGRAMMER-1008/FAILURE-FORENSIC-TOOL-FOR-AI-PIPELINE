@@ -45,6 +45,10 @@ def test_api_workflow_and_contracts(store):
     assert request(app, "POST", f"/api/v1/runs/{run_id}/reviews", json=review).status_code == 200
     assert request(app, "POST", f"/api/v1/runs/{run_id}/reviews", json=review).status_code == 200
     assert len(request(app, "GET", "/api/v1/datasets").json()) == 1
+    exported = request(app, "GET", f"/api/v1/runs/{run_id}/export")
+    assert exported.json()["run"]["id"] == run_id
+    assert len(exported.json()["reviews"]) == 1
+    assert "attachment" in exported.headers["content-disposition"]
     events = request(app, "GET", f"/api/v1/runs/{run_id}/events", headers={"Last-Event-ID": "2"})
     assert "id: 1\n" not in events.text and "event: succeeded" in events.text
 

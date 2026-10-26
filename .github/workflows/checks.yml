@@ -61,6 +61,22 @@ jobs:
           done
           docker logs ff-smoke
           exit 1
+      - run: |
+          trap 'docker rm -f ff-project >/dev/null 2>&1 || true' EXIT
+          owner_hash="$(docker run --rm failure-forensics:ci python -c 'from ffv2.auth import password_hash; print(password_hash("test-only-container-password"))')"
+          docker run -d --name ff-project -e FF_MODE=hosted -e FF_PROVIDER=fake -e FF_PUBLIC_ORIGIN=https://forensics.example -e FF_OWNER_PASSWORD_HASH="$owner_hash" failure-forensics:ci python -m ffv2.hosted project
+          for i in $(seq 1 30); do
+            if docker exec ff-project python -c "import urllib.request; assert urllib.request.urlopen('http://127.0.0.1:8000/health/ready',timeout=2).status == 200"; then break; fi
+            sleep 1
+          done
+          docker cp scripts/project_smoke.py ff-project:/app/project_smoke.py
+          docker exec ff-project python /app/project_smoke.py
+          docker restart ff-project
+          for i in $(seq 1 30); do
+            if docker exec ff-project python -c "import urllib.request; assert urllib.request.urlopen('http://127.0.0.1:8000/health/ready',timeout=2).status == 200"; then break; fi
+            sleep 1
+          done
+          docker exec ff-project python /app/project_smoke.py
   browser:
     runs-on: ubuntu-latest
     steps:

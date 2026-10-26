@@ -12,8 +12,8 @@ As of 26 October 2026, the local app and real Groq workflow work. The repository
 
 ## Required external deployment steps
 
-1. Authorize Render's paid persistent web/worker/database plans after reviewing the account quote. No paid resources have been created.
-2. Connect the repository in the owner's Render account, enter the Groq key and generated owner-password hash directly in secret settings, and deploy the same tested commit to web and worker.
+1. Use the free combined web/worker service and existing free PostgreSQL in My Workspace. No paid provisioning is authorized. The database expires 25 November 2026; this is temporary project hosting.
+2. Connect the repository in the owner's Render account, enter the Groq key and generated owner-password hash directly in secret settings, and deploy the tested commit to the combined service.
 3. Verify the actual Render HTTPS origin, authenticated Groq run, restart recovery, new-database restore, retention, monitoring and alert recipients. CI cannot certify these account-specific operations.
 
 Use [the Render deployment guide](render-deployment.md). The current product is a private owner workspace, not a public multi-tenant SaaS. Do not share the owner password with visitors. The optional legacy OIDC proxy integration is not required by built-in hosted mode and remains an independently configured path.
