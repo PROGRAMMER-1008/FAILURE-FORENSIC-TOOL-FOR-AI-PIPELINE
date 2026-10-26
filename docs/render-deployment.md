@@ -27,7 +27,7 @@ Enable and verify the paid database's backup retention in Render. Restore into a
 
 Use `/health/ready` for Render health checks (database/schema only, not provider accuracy), and monitor worker exits/restarts, queue delays, HTTP failures and Groq usage in the service/account dashboards. Configure Render account alert recipients yourself; no emails or external monitoring accounts were created.
 
-Before releases: save a backup, record the tested Git commit, and keep the previous container revision. These migrations add tables only. Reverting code must retain the newer tables. Never run destructive downgrades; restore a verified backup to a new database if a schema-incompatible rollback becomes necessary. Test this against the intended Render environment before calling operations validated.
+Before releases: save a backup, record the tested Git commit, and keep the previous container revision. These migrations add tables only. Reverting code must retain the newer tables and use a prior image compatible with hosted mode and the current schema. Pre-hosted releases are not compatible rollback targets. Never run destructive downgrades; restore a verified backup to a new database if a schema-incompatible rollback becomes necessary. Test this against the intended Render environment before calling operations validated.
 
 ## External checks still required
 

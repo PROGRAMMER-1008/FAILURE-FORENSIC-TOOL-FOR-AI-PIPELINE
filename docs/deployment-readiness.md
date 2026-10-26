@@ -8,7 +8,7 @@ As of 26 October 2026, the local app and real Groq workflow work. The repository
 - Shared database-backed mutation and Groq request budgets, with bounded completion tokens. Limits persist across API/worker restarts; they are not a monetary spending guarantee.
 - Linux parser CPU/address-space limits and per-process parser concurrency control, plus existing input-size and wall-time limits.
 - Render web/worker/database configuration, explicit migration, worker startup gating, private database network and secret inputs. Official Render Blueprint schema check passed.
-- Backend, frontend and type/lint checks are recorded in implementation-status.md. CI now includes PostgreSQL restore/comparison, concurrent budgets, container readiness and HTTPS browser tests; see the latest verification log for results.
+- Backend, frontend and type/lint checks are recorded in implementation-status.md. GitHub CI for commit 66a831c passed PostgreSQL restore/comparison, concurrent budgets, Linux parser limits, container readiness and HTTPS browser tests.
 
 ## Required external deployment steps
 
