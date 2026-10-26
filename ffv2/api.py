@@ -190,13 +190,22 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
             "groq_max_completion_tokens": settings.groq_max_completion_tokens,
             "max_characters": settings.max_characters,
             "max_upload_bytes": settings.max_upload_bytes,
-            "retention": "Local until explicit deletion; secret redaction is not comprehensive PII detection",
+            "retention": (
+                "Hosted database retention depends on your hosting plan; export before expiry"
+                if settings.mode == "hosted"
+                else "Local until explicit deletion; secret redaction is not comprehensive PII detection"
+            ),
             "sample": SYNTHETIC_SOURCE,
         }
 
     def submit(body: Submit):
         if not settings.ai_ready:
-            raise HTTPException(503, "Groq key missing. Add FF_GROQ_API_KEY to .env and restart.")
+            raise HTTPException(
+                503,
+                "Groq key missing. Set FF_GROQ_API_KEY in hosting settings and redeploy."
+                if settings.mode == "hosted"
+                else "Groq key missing. Add FF_GROQ_API_KEY to .env and restart.",
+            )
         if len(body.text) > settings.max_characters:
             raise HTTPException(413, "Character limit exceeded")
         if body.injected and (settings.provider != "fake" or body.text != SYNTHETIC_SOURCE):

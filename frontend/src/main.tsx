@@ -279,7 +279,7 @@ function App() {
             : config?.provider === "groq"
               ? "Groq cloud API"
               : "Local Ollama"}
-          <p>{readonly ? "Recorded demo · read only" : "Local workspace"}</p>
+          <p>{readonly ? "Recorded demo · read only" : config?.mode === "hosted" ? "Private hosted workspace" : "Local workspace"}</p>
           <small>
             Evidence first.
             <br />
@@ -304,8 +304,9 @@ function App() {
         </header>
         {config?.ai_ready === false && (
           <p role="status" className="notice">
-            AI setup is incomplete. Add your Groq key locally, restart the app,
-            then submit a document.{" "}
+            {config?.mode === "hosted"
+              ? "AI setup is incomplete. Add FF_GROQ_API_KEY in hosting settings, deploy the saved settings, then submit a document."
+              : "AI setup is incomplete. Add your Groq key locally, restart the app, then submit a document."}{" "}
             <a href="#settings">View setup instructions</a>
           </p>
         )}
@@ -466,10 +467,11 @@ function App() {
                 <div className="empty">
                   <h3>No investigations yet.</h3>
                   <p>
-                    Start with an invented invoice to inspect an injected
-                    extraction mistake.
+                    {config?.provider === "fake"
+                      ? "Start with an invented invoice to inspect an injected extraction mistake."
+                      : "Try the invented invoice or your own document, then compare the AI outputs with the source."}
                   </p>
-                  <a href="#new">Open a synthetic case →</a>
+                  <a href="#new">Start an investigation →</a>
                 </div>
               )}
               <div className="actions">
@@ -494,8 +496,10 @@ function App() {
           <>
             <h1>Start an investigation</h1>
             <p>
-              Source content is stored locally after secret redaction. Automated
-              redaction does not identify every private detail.
+              {config?.mode === "hosted"
+                ? "Source content is stored in your hosted database after secret redaction. Export important investigations before your database expires."
+                : "Source content is stored locally after secret redaction."}{" "}
+              Automated redaction does not identify every private detail.
             </p>
             {config?.provider === "groq" && (
               <p className="notice">
@@ -1061,8 +1065,8 @@ function App() {
           </>
         )}
         <footer>
-          Failure Forensics v2 · Evidence-backed debugging · Local development
-          preview
+          Failure Forensics v2 · Evidence-backed debugging ·{" "}
+          {config?.mode === "hosted" ? "Private hosted project" : "Local development preview"}
         </footer>
       </main>
     </div>

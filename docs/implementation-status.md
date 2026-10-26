@@ -205,3 +205,12 @@ Created only the free failure-forensics-project-db in My Workspace, ID dpg-dbfff
 Official Blueprint JSON schema validation passed previously for this free configuration; Ruff check/format, mypy and frontend build passed. A fresh focused pytest attempt encountered Windows shared temporary-directory permissions, so rerun uses a new project-local test directory. Combined container checks await remote CI; local Docker remains unavailable. Actual hosted credentials, deployed web readiness and hosted Groq workflow remain pending.
 
 Focused rerun: 9 passed. The first project-local rerun exposed a login-limit test crossing a real five-minute boundary; quota integration tests now hold the quota clock fixed, while the separate window-reset test still checks rollover. Ruff check/format and diff whitespace checks passed after this test fix.
+
+
+### Free Render service created
+
+Published 57fc164 to main. Created free web service failure-forensics-project (srv-dbfn9bi9lscs73aos34g) in My Workspace/Oregon, automatic deploys disabled. URL allocated: https://failure-forensics-project.onrender.com . Generated a random owner password in ignored data/hosted-owner-password.txt and configured only its scrypt hash. Connected the existing free PostgreSQL using its internal URL through Render Dashboard; local .env was not accessed. Added /health/ready as the service health path. Initial service creation briefly used the default ephemeral SQLite before the database setting was saved; no user workflow was submitted there. Deploy dep-dbfnb5l9fdbs739jg1r0 applies PostgreSQL and remains pending verification.
+
+GitHub run 40351741397 backend/frontend/container jobs passed, including combined API/worker processing before and after restart; browser job still running at this checkpoint. Groq API key must be entered by the owner directly on the Environment page, then deployed. Do not call hosted AI verified before that succeeds. Free database expires 25 November 2026. No paid service was provisioned, and RELAY is unchanged.
+
+Owner confirmed Groq key saved. Refreshed Dashboard confirmed the FF_GROQ_API_KEY name without reading its value. Automatic approval review initially rejected deployment because an earlier stale view lacked the key; after refreshing and confirming the prerequisite, retry succeeded. Deploy dep-dbfncg67bikc73e7aj80 reached live. Corrected hosted UI storage/setup labels discovered during sign-in verification; frontend build and Python lint/format passed. Live workflow validation is underway.
