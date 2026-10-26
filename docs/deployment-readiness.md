@@ -7,11 +7,11 @@ As of 26 October 2026, the local application and a real Groq workflow work. The 
 - Durable API/worker processing, tracing, human review, controlled replay and dataset mechanics have automated local coverage.
 - Local Groq producer calls completed extraction, classification and summarization on an invented invoice. Invalid evaluator citations were rejected and quality stayed inconclusive.
 - Frontend production build, component tests and browser evidence are documented in implementation-status.md.
-- Reproducible dependencies, migrations, Docker packaging and CI workflows exist. Existing sample websites are not the full backend.
+- GitHub CI passed for release commit `3e9dedc`: backend with PostgreSQL queue validation, frontend, container build/migration/readiness, and browser workflows. Existing sample websites are not the full backend.
 
 ## Required before a hosted release
 
-1. Run final-tree container build/readiness and PostgreSQL queue/restore checks. Local Docker is currently unavailable; GitHub CI can establish build and PostgreSQL queue evidence, but not a complete backup-restore drill.
+1. Complete a PostgreSQL backup-restore drill and restart/rollback checks on the intended host. GitHub CI has now passed final-tree container build/readiness and PostgreSQL queue tests; local Docker remains unavailable.
 2. Select an API/long-running-worker host and private persistent PostgreSQL service. The Vercel static site alone does not host this architecture. No paid infrastructure has been authorized.
 3. Configure and test TLS and the trusted OIDC proxy with a real account. Current private mode is single-owner; public multi-user workspaces and per-user data isolation are not implemented.
 4. Enforce account usage budgets and shared rate limits before allowing visitors to consume the owner's Groq quota. Current mutation limits are process-local.

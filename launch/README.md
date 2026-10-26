@@ -5,12 +5,10 @@ Recommended sharing link: https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TO
 Share the repository with `failure-forensics-groq-demo.mp4`. The earlier static demo is optional and is not the full application.
 
 - `failure-forensics-demo.mp4`: captioned recording of the actual local app, H.264, 1280×800, silent. Uses invented data and the synthetic provider only.
-- `failure-forensics-demo.webm`: original browser recording.
 - `video-cover.png`: cover image from the recording.
 - `demo-captions.srt`: optional timed captions for the 57.64-second silent video. Captions are also visible in the video.
 - `demo-chapters.json`: chapter timing and caption text; reusable as a narration outline.
 - `linkedin-post.md`: first-person post drafted from the owner's stated month-long project history. Describes a project built from scratch, not an upgrade.
-- `public-demo-desktop.png` / `public-demo-mobile.png`: public showcase QA captures.
 - `deployment.md`: verified deployment details, usage instructions and limits.
 
 Upload the MP4 directly to LinkedIn, paste `linkedin-post-groq.md`, and use the repository link. Review the first-person wording before posting. No LinkedIn post or message has been sent on your behalf.
@@ -25,6 +23,6 @@ Use a dedicated synthetic database, migrate it, and start the API/worker on loop
 
 `failure-forensics-groq-demo.mp4` is a second, 61.96-second captioned silent recording using live Groq (`openai/gpt-oss-20b`), an invented invoice and no error injection. The three generation steps completed. Extraction returned 814 EUR; classification returned invoice. The summary evaluator failed citation validation, so overall quality remained inconclusive. This is one observed run, not an accuracy benchmark.
 
-Supporting files: `groq-run-evidence.json`, `groq-demo-chapters.json`, `groq-video-cover.png`, and the original WebM. The recording uses a separate database and the existing app's runtime credential loading; no key was displayed or copied into these artifacts. API requests use the owner's Groq account quota.
+Published supporting files: `groq-demo-chapters.json` and `groq-video-cover.png`. Raw WebM recordings, run evidence and deployment scratch folders stay local and are not included in GitHub. The recording uses a separate database and the existing app's runtime credential loading; no key was displayed or copied into these artifacts. API requests use the owner's Groq account quota.
 
-`vercel-sample/` is an isolated static deployment folder for a personal Vercel address. It does not expose the Groq backend. Published under the owner’s Vercel account at https://failure-forensics-pk.vercel.app.
+The locally retained `vercel-sample/` folder is an isolated static deployment folder for a personal Vercel address. It does not expose the Groq backend. Published under the owner’s Vercel account at https://failure-forensics-pk.vercel.app.
