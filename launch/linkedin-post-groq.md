@@ -1,23 +1,42 @@
-# LinkedIn post — real AI video
+# LinkedIn post — use with the real Groq demo
 
-For the past month, I’ve been building Failure Forensics from scratch: a tool to understand what happens inside a document-processing AI pipeline.
+An AI pipeline can run successfully—and still produce the wrong answer.
 
-The attached demo uses real Groq inference on an invented invoice. It extracts the facts, classifies the document, and generates a summary—with each step visible alongside the original evidence.
+The harder question is: where did the mistake begin, and which later outputs inherited it?
 
-An interesting result from this run: the AI extracted the correct amount, 814 EUR, but its summary evaluator produced citations that failed validation. The app kept the assessment inconclusive instead of presenting it as verified.
+Over the past month, I’ve been building Failure Forensics from scratch to make that investigation visible.
 
-That is the problem I wanted to explore: finishing a pipeline successfully is different from knowing its answer is correct.
+It turns a document-processing pipeline—extraction, classification and summarization—into an inspectable chain of evidence. You can compare every output with its source, follow dependencies, review a suspected failure and test a correction without overwriting the original run.
 
-I built an interactive dependency graph, source/output comparisons, human reviews, controlled correction replays, and versioned review datasets. The stack is React, TypeScript, FastAPI, SQLAlchemy and Alembic, with Groq and local Ollama adapters.
+🔍 Why this matters
 
-The video shows real AI responses. The repository includes setup instructions so you can run the full app locally with your own Groq key.
+A wrong invoice amount, missed contract detail or unsupported summary can look convincing after passing through several AI steps. Failure Forensics brings the source, intermediate outputs and evaluation findings into one workspace, helping developers investigate the starting point instead of repeatedly patching the final answer.
 
-Explore the code and run it locally: https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE
+🧠 The AI engineering behind it
 
-Full hosted deployment is still in progress; this is a working local development release.
+• Structured LLM outputs validated against explicit schemas.
+• LLM-as-judge evaluation that separates source correctness from faithfulness to upstream inputs.
+• Exact quote and character-offset checks to reject unsupported citations.
+• Dependency-graph analysis to distinguish suspected origins from downstream symptoms.
+• Controlled correction replays to test how a changed intermediate output affects later steps.
+• Human review and versioned evaluation datasets for reproducible comparisons.
 
-This is one of the projects I’ve been working on. I’ll be sharing more posts about the remaining projects soon.
+One result from the attached real-Groq demo captures the idea: the model extracted the correct invoice amount, but its evaluator returned citations that failed validation. The app kept the assessment inconclusive. A confident evaluator should not get the last word without evidence.
 
-What would help you investigate an AI pipeline when the final answer looks plausible but something feels wrong?
+⚙️ Built end to end
 
-#AIEngineering #LLM #FullStackDevelopment #Python #BuildInPublic
+AI & evaluation: Python · Groq inference · Ollama integration · Pydantic contracts
+Backend & data: FastAPI · SQLAlchemy · PostgreSQL · Alembic · durable job processing
+Interface: React · TypeScript · interactive pipeline graph · evidence comparison
+Delivery & quality: Docker · GitHub Actions · Playwright · pytest · free Render hosting
+
+The full app now has a private hosted workspace. The repository includes local setup so you can try it with your own Groq key. This is an AI engineering project focused on observability and evaluation; the demo is not a model-accuracy benchmark.
+
+🎥 Real AI walkthrough attached.
+💻 Code and setup: https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE
+
+This is one of the projects I’ve been working on, and I’ll be sharing more of the remaining projects soon.
+
+When an AI answer looks plausible, what evidence would you want before trusting it?
+
+#AIEngineering #LLMEvaluation #ExplainableAI #MachineLearning #BuildInPublic

@@ -31,7 +31,7 @@ Before releases: save a backup, record the tested Git commit, and keep the previ
 
 ## External checks still required
 
-Secret entry by the owner; real domain/TLS and service restart/restore checks; a live hosted Groq smoke. The legacy OIDC proxy mode is optional and remains separate from the built-in hosted owner login. Independent human evaluation and model-accuracy studies are not replaced by these engineering checks.
+Owner secret configuration, HTTPS login and a real hosted Groq producer run were verified on 26 October. Exact export comparison after restart remains unverified: readiness requests timed out on 28 October. Target-host database restore and alert-delivery checks remain outstanding. The legacy OIDC proxy mode is optional and remains separate from the built-in hosted owner login. Independent human evaluation and model-accuracy studies are not replaced by these engineering checks.
 
 References: [Blueprint specification](https://render.com/docs/blueprint-spec), [compute plans](https://render.com/docs/compute-plans), [free-tier limits](https://render.com/docs/free).
 

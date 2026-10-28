@@ -214,3 +214,21 @@ Published 57fc164 to main. Created free web service failure-forensics-project (s
 GitHub run 40351741397 backend/frontend/container jobs passed, including combined API/worker processing before and after restart; browser job still running at this checkpoint. Groq API key must be entered by the owner directly on the Environment page, then deployed. Do not call hosted AI verified before that succeeds. Free database expires 25 November 2026. No paid service was provisioned, and RELAY is unchanged.
 
 Owner confirmed Groq key saved. Refreshed Dashboard confirmed the FF_GROQ_API_KEY name without reading its value. Automatic approval review initially rejected deployment because an earlier stale view lacked the key; after refreshing and confirming the prerequisite, retry succeeded. Deploy dep-dbfncg67bikc73e7aj80 reached live. Corrected hosted UI storage/setup labels discovered during sign-in verification; frontend build and Python lint/format passed. Live workflow validation is underway.
+
+
+### Real hosted Groq verification
+
+Deploy dep-dbfncg67bikc73e7aj80 reached live with PostgreSQL and user-entered Groq key. HTTPS /health/ready returned 200; anonymous runs API returned 401; owner login succeeded. Submitted one invented invoice (not synthetic provider), run 8c102c6b-a411-4138-9b92-9c107ca0b7ab. All three producer steps succeeded with provider groq. Extraction/classification judges assessed acceptable; summary judge unavailable, so diagnosis correctly abstained as inconclusive. The recorded error does not distinguish provider failure from invalid judge response, so no specific root cause is claimed. Authenticated JSON export and post-logout access rejection passed. Evidence saved locally in ignored data/render-smoke-export.json.
+
+Published hosted wording fix 39007aa; deploy dep-dbfne31srm7s73fk9s5g is applying it. This redeploy will also verify persisted investigation recovery. GitHub browser job on 57fc164 remains in browser dependency installation; other jobs passed. Do not claim the pending browser check passed.
+
+
+## Completion checkpoint and launch copy — 2026-10-28
+
+Latest application commit 39007aa has all four GitHub checks passing: backend, frontend, container and browser, run https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE/actions/runs/40353424554 . Render deploy dep-dbfne31srm7s73fk9s5g was confirmed live, and the browser displayed the saved investigation with updated hosted labels after redeploy.
+
+Exact JSON persistence comparison remains NOT VERIFIED. The earlier attempt was blocked by automatic approval review's account usage limit (not a safety rejection); a resumed request on 27 October timed out during readiness, and three bounded 25-second readiness requests on 28 October also timed out. No new AI calls were made. This does not establish a database failure or a specific hosting cause. The prior successful real Groq run/export/logout remains valid historical evidence; current availability is not claimed. No local .env secret was accessed.
+
+Added docs/hosted-quickstart.md with URL, local password-file location, investigation steps and free-hosting limits. Rewrote both LinkedIn drafts to match the real Groq video: lead with debugging impact, explain structured outputs, LLM-as-judge, citation validation, graph analysis, controlled replay and human review, and group the technology stack by responsibility. Preserved month-long built-from-scratch story and upcoming-project posts; no invented accuracy, time-saving or business metrics. Nothing posted to LinkedIn.
+
+Remaining limitations: current hosted readiness and exact export persistence recheck; summary judge was unavailable in the hosted example; no target-host restore or alert-delivery test; free database expires 25 November 2026. These are explicitly recorded instead of labeling all external checks complete.
