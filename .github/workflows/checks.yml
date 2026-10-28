@@ -105,6 +105,11 @@ jobs:
           uv run python -m uvicorn ffv2.api:app --host 127.0.0.1 --port 18443 --ssl-keyfile /tmp/ff-key.pem --ssl-certfile /tmp/ff-cert.pem --no-access-log &
           hosted_pid=$!
           export FF_HOSTED_BROWSER_URL=https://127.0.0.1:18443
-          trap 'kill "$api_pid" "$worker_pid" "$hosted_pid"' EXIT
+          export FF_MODE=public
+          export FF_PUBLIC_ORIGIN=https://127.0.0.1:18444
+          uv run python -m uvicorn ffv2.api:app --host 127.0.0.1 --port 18444 --ssl-keyfile /tmp/ff-key.pem --ssl-certfile /tmp/ff-cert.pem --no-access-log &
+          public_pid=$!
+          export FF_PUBLIC_BROWSER_URL=https://127.0.0.1:18444
+          trap 'kill "$api_pid" "$worker_pid" "$hosted_pid" "$public_pid"' EXIT
           for i in 1 2 3 4 5; do curl --fail http://127.0.0.1:8000/health/ready && break || sleep 1; done
           npm --prefix frontend run e2e

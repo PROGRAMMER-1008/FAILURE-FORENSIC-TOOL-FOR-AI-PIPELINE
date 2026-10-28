@@ -19,6 +19,7 @@ from ffv2.db import (
     reviews,
     runs,
 )
+from ffv2.visitors import visitor, run_scope
 from ffv2.models import ReviewInput, Run, now, uid
 from ffv2.privacy import fingerprint, redact
 
@@ -41,7 +42,9 @@ class Store:
 
     def get(self, run_id: str) -> Run:
         with self.engine.connect() as conn:
-            row = conn.execute(select(runs.c.payload).where(runs.c.id == run_id)).first()
+            row = conn.execute(
+                select(runs.c.payload).where(runs.c.id == run_id, run_scope())
+            ).first()
         if row is None:
             raise Missing()
         return Run.model_validate(row[0])
@@ -70,6 +73,7 @@ class Store:
             .limit(min(100, limit))
             .offset(offset)
         )
+        query = query.where(run_scope())
         if status:
             query = query.where(runs.c.status == status)
         if query_text:
@@ -89,9 +93,9 @@ class Store:
             return [
                 dict(r)
                 for r in conn.execute(
-                    select(runs.c.status, runs.c.quality, func.count().label("count")).group_by(
-                        runs.c.status, runs.c.quality
-                    )
+                    select(runs.c.status, runs.c.quality, func.count().label("count"))
+                    .where(run_scope())
+                    .group_by(runs.c.status, runs.c.quality)
                 ).mappings()
             ]
 
@@ -117,6 +121,9 @@ class Store:
         )
 
     def enqueue(self, run: Run, key: str) -> Run:
+        if identity := visitor.get():
+            run.config["visitor_id"] = identity
+            key = fingerprint([identity, key])
         request_hash = fingerprint(
             {"source": run.source, "config": run.config, "parent": run.parent_id}
         )
@@ -325,6 +332,7 @@ class Store:
                 )
 
     def cancel(self, run_id: str) -> None:
+        self.get(run_id)
         with self.engine.begin() as conn:
             row = (
                 conn.execute(select(jobs).where(jobs.c.run_id == run_id).with_for_update())
@@ -348,6 +356,7 @@ class Store:
                 self._event(conn, run_id, "cancel_requested", {})
 
     def event_list(self, run_id: str, after: int = 0) -> list[dict]:
+        self.get(run_id)
         with self.engine.connect() as conn:
             return [
                 dict(r)
@@ -360,6 +369,7 @@ class Store:
             ]
 
     def review(self, run_id: str, request: ReviewInput) -> dict:
+        self.get(run_id)
         with self.engine.begin() as conn:
             current = conn.execute(
                 select(runs.c.payload).where(runs.c.id == run_id).with_for_update()

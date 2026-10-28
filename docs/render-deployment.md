@@ -1,4 +1,6 @@
-# Deploy the full single-owner app on Render
+# Private owner deployment on Render
+
+For the new password-free public version, use [the public deployment guide](public-deployment.md). Root `render.yaml` now defaults to public mode; use `FF_MODE=hosted` and supply the owner hash for the private setup below.
 
 This deploys the actual React console, FastAPI API, durable worker and PostgreSQL database. It is not the static sample. The root `render.yaml` uses one free web service running the API and worker together, plus free PostgreSQL. This is a hobby-project deployment with idle sleep and a database expiry, not permanent hosting. The optional `deploy/render-paid.example.yaml` is reference only and is not authorized for deployment.
 

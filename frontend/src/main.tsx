@@ -68,6 +68,9 @@ type Config = {
   groq_daily_calls: number;
   groq_max_completion_tokens: number;
   retention: string;
+  visitor_daily_submissions: number;
+  public_daily_submissions: number;
+  visitor_session_seconds: number;
 };
 const terminal = (status: string) =>
   ["succeeded", "failed", "cancelled"].includes(status);
@@ -157,7 +160,7 @@ function App() {
     return () => window.removeEventListener("hashchange", change);
   }, []);
   useEffect(() => {
-    if (page === "overview" || page === "runs") {
+    if (config && (page === "overview" || page === "runs")) {
       api<{ items: Row[] }>(
         `/runs?limit=12&offset=${offset}&status=${filter}&q=${encodeURIComponent(search)}&oldest_first=${oldest}${since ? "&since=" + encodeURIComponent(new Date(since).toISOString()) : ""}`,
       )
@@ -170,9 +173,9 @@ function App() {
         })
         .catch((e) => setError(String(e)));
     }
-  }, [page, offset, filter, search, since, oldest]);
+  }, [page, offset, filter, search, since, oldest, config]);
   useEffect(() => {
-    if (!page.startsWith("run/")) return;
+    if (!config || !page.startsWith("run/")) return;
     const id = page.slice(4);
     let active = true;
     setRun(null);
@@ -222,7 +225,7 @@ function App() {
       stream.close();
       clearInterval(poll);
     };
-  }, [page]);
+  }, [page, config]);
   useEffect(() => {
     if (run && terminal(run.status))
       setNotice(
@@ -238,6 +241,11 @@ function App() {
       });
       go("run/" + result.id);
     });
+  if (!config) return <main className="workflow-guide">
+    <h1>Opening Failure Forensics</h1>
+    <p>{error || "Connecting to the backend. Free hosting may take a minute or more to wake up."}</p>
+    <button onClick={() => location.reload()}>Try again</button>
+  </main>;
   const span = run?.attempts.filter((a) => a.step_id === selected).at(-1);
   return (
     <div className="app">
@@ -279,7 +287,7 @@ function App() {
             : config?.provider === "groq"
               ? "Groq cloud API"
               : "Local Ollama"}
-          <p>{readonly ? "Recorded demo · read only" : config?.mode === "hosted" ? "Private hosted workspace" : "Local workspace"}</p>
+          <p>{readonly ? "Recorded demo · read only" : config?.mode === "public" ? "Your visitor workspace" : config?.mode === "hosted" ? "Private hosted workspace" : "Local workspace"}</p>
           <small>
             Evidence first.
             <br />
@@ -304,12 +312,20 @@ function App() {
         </header>
         {config?.ai_ready === false && (
           <p role="status" className="notice">
-            {config?.mode === "hosted"
+            {config?.mode === "public"
+              ? "AI is temporarily unavailable. Please try again later; visitors do not need to enter an API key."
+              : config?.mode === "hosted"
               ? "AI setup is incomplete. Add FF_GROQ_API_KEY in hosting settings, deploy the saved settings, then submit a document."
               : "AI setup is incomplete. Add your Groq key locally, restart the app, then submit a document."}{" "}
             <a href="#settings">View setup instructions</a>
           </p>
         )}
+        {config.mode === "public" && <p className="notice">
+          No sign-up needed. Your investigations are separate from other visitors.
+          This browser session lasts {Math.round(config.visitor_session_seconds / 3600)} hours.
+          Up to {config.visitor_daily_submissions} submission attempts per visitor per UTC day,
+          subject to the shared allowance. Download results before leaving; clearing cookies loses access.
+        </p>}
         {error && (
           <div role="alert" className="alert">
             {error}
@@ -496,7 +512,7 @@ function App() {
           <>
             <h1>Start an investigation</h1>
             <p>
-              {config?.mode === "hosted"
+              {["hosted", "public"].includes(config.mode)
                 ? "Source content is stored in your hosted database after secret redaction. Export important investigations before your database expires."
                 : "Source content is stored locally after secret redaction."}{" "}
               Automated redaction does not identify every private detail.
@@ -987,7 +1003,19 @@ function App() {
           ))}
         {page === "dataset" && <Dataset readonly={readonly} />}
         {page === "experiments" && <Experiments readonly={readonly} />}
-        {page === "settings" && (
+        {page === "settings" && config.mode === "public" && <>
+          <h1>Visitor access & status</h1>
+          <section><h2>No account or API key required</h2>
+            <p>The site owner provides the AI connection. Submitted documents and intermediate outputs go to Groq when cloud AI is enabled. Use non-sensitive documents: automatic redaction cannot remove every private detail.</p>
+            <p>Your cookie grants access to your investigations only. The session expires after {Math.round(config.visitor_session_seconds / 3600)} hours; losing it loses access. Expiration does not automatically delete stored records.</p>
+            <p>Download important investigations. This free project database expires on 25 November 2026.</p>
+          </section>
+          <section><h2>Fair-use allowances</h2>
+            <p>{config.visitor_daily_submissions} submission attempts per visitor and {config.public_daily_submissions} shared attempts per UTC day. Runs, uploads, replays and experiments count, including rejected attempts. The backend also caps AI calls at {config.groq_daily_calls} per UTC day. These shared limits may pause new work.</p>
+            <p>Provider: {config.provider}. Model: {config.producer_model}. AI connection: {config.ai_ready ? "Configured; each request is checked when submitted" : "Unavailable"}.</p>
+          </section>
+        </>}
+        {page === "settings" && config.mode !== "public" && (
           <>
             <h1>Settings & status</h1>
             <section className="workflow-guide">
@@ -1066,7 +1094,7 @@ function App() {
         )}
         <footer>
           Failure Forensics v2 · Evidence-backed debugging ·{" "}
-          {config?.mode === "hosted" ? "Private hosted project" : "Local development preview"}
+          {config?.mode === "public" ? "Public project · private visitor sessions" : config?.mode === "hosted" ? "Private hosted project" : "Local development preview"}
         </footer>
       </main>
     </div>

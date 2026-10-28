@@ -1,7 +1,8 @@
 """Immutable feedback snapshots. Production feedback never enters the frozen fixture split."""
 
 from sqlalchemy import insert, select
-from ffv2.db import cases, datasets
+from ffv2.db import cases, datasets, runs
+from ffv2.visitors import visitor, run_scope
 from ffv2.models import Model, now
 from ffv2.privacy import fingerprint, redact
 from ffv2.store import Conflict, Missing, Store
@@ -23,7 +24,10 @@ def freeze(store: Store, request: FreezeRequest) -> dict:
         selected = [
             dict(row)
             for row in conn.execute(
-                select(cases).where(cases.c.id.in_(request.case_ids)).order_by(cases.c.id)
+                select(cases)
+                .join(runs, cases.c.run_id == runs.c.id)
+                .where(cases.c.id.in_(request.case_ids), run_scope())
+                .order_by(cases.c.id)
             ).mappings()
         ]
         if len(selected) != len(request.case_ids):
@@ -39,6 +43,8 @@ def freeze(store: Store, request: FreezeRequest) -> dict:
                 "execution_mode": "human_feedback_not_benchmark",
             }
         )
+        if identity := visitor.get():
+            snapshot["visitor_id"] = identity
         digest = fingerprint(snapshot)
         existing = conn.scalar(select(datasets.c.payload).where(datasets.c.id == digest))
         if existing:

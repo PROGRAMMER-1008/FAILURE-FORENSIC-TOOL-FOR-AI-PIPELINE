@@ -19,7 +19,8 @@ from ffv2.privacy import fingerprint, redact
 from ffv2.replay import ReplayRequest, replay
 from ffv2.limits import reserve
 from ffv2.auth import gate
-from ffv2.db import usage_windows, owner_sessions
+from ffv2.db import usage_windows, owner_sessions, runs
+from ffv2.visitors import visitor, run_scope, document_scope, public_boundary
 from ffv2.settings import Settings
 from ffv2.store import Conflict, Missing, Store
 from ffv2.uploads import DocumentError, isolated_extract
@@ -77,8 +78,7 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
     parser_slot = asyncio.Semaphore(1)
     app.add_middleware(BodyLimit, maximum=settings.max_upload_bytes)
 
-    @app.middleware("http")
-    async def boundary(request: Request, call_next):
+    async def guarded(request: Request, call_next):
         request_id = uid()
         peer_key = request.client.host if request.client else "unknown"
         if settings.mode == "hosted":
@@ -106,7 +106,9 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
             if origin and origin != f"{request.url.scheme}://{request.headers.get('host')}":
                 return JSONResponse({"error": "Cross-origin request denied"}, 403)
         if request.method not in {"GET", "HEAD", "OPTIONS"}:
-            scope = "owner" if settings.mode in {"private", "hosted"} else fingerprint(peer_key)
+            scope = visitor.get() or (
+                "owner" if settings.mode in {"private", "hosted"} else fingerprint(peer_key)
+            )
             try:
                 allowed = await asyncio.to_thread(
                     reserve,
@@ -138,6 +140,21 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
             }
         )
         return response
+
+    @app.middleware("http")
+    async def boundary(request: Request, call_next):
+        if settings.mode == "public":
+
+            async def scoped(req):
+                return await guarded(req, call_next)
+
+            try:
+                response = await public_boundary(request, settings, store.engine, scoped)
+            except Exception:
+                response = JSONResponse({"error": "visitor_access_unavailable"}, 503)
+            response.headers["Cache-Control"] = "private, no-store"
+            return response
+        return await guarded(request, call_next)
 
     @app.exception_handler(Missing)
     async def missing(request, exc):
@@ -174,6 +191,9 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
     def config():
         return {
             "mode": settings.mode,
+            "visitor_daily_submissions": settings.visitor_daily_submissions,
+            "public_daily_submissions": settings.public_daily_submissions,
+            "visitor_session_seconds": settings.visitor_session_seconds,
             "provider": settings.provider,
             "ai_ready": settings.ai_ready,
             "credential_status": "present_not_verified"
@@ -192,7 +212,7 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
             "max_upload_bytes": settings.max_upload_bytes,
             "retention": (
                 "Hosted database retention depends on your hosting plan; export before expiry"
-                if settings.mode == "hosted"
+                if settings.mode in {"hosted", "public"}
                 else "Local until explicit deletion; secret redaction is not comprehensive PII detection"
             ),
             "sample": SYNTHETIC_SOURCE,
@@ -203,7 +223,7 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
             raise HTTPException(
                 503,
                 "Groq key missing. Set FF_GROQ_API_KEY in hosting settings and redeploy."
-                if settings.mode == "hosted"
+                if settings.mode in {"hosted", "public"}
                 else "Groq key missing. Add FF_GROQ_API_KEY to .env and restart.",
             )
         if len(body.text) > settings.max_characters:
@@ -373,6 +393,8 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
                 dict(row)
                 for row in conn.execute(
                     select(cases)
+                    .join(runs, cases.c.run_id == runs.c.id)
+                    .where(run_scope())
                     .where(cases.c.payload["label_state"].as_string() == "reviewed")
                     .order_by(cases.c.id)
                     .limit(limit)
@@ -386,6 +408,7 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
             return list(
                 conn.execute(
                     select(experiments_table.c.payload)
+                    .where(document_scope(experiments_table))
                     .order_by(experiments_table.c.created_at.desc())
                     .limit(25)
                 ).scalars()
@@ -402,7 +425,9 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
         with store.engine.connect() as conn:
             if (
                 conn.scalar(
-                    select(experiments_table.c.id).where(experiments_table.c.id == experiment_id)
+                    select(experiments_table.c.id).where(
+                        experiments_table.c.id == experiment_id, document_scope(experiments_table)
+                    )
                 )
                 is None
             ):
@@ -430,7 +455,10 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
         with store.engine.connect() as conn:
             return list(
                 conn.execute(
-                    select(datasets.c.payload).order_by(datasets.c.created_at.desc()).limit(100)
+                    select(datasets.c.payload)
+                    .where(document_scope(datasets))
+                    .order_by(datasets.c.created_at.desc())
+                    .limit(100)
                 ).scalars()
             )
 
@@ -439,7 +467,9 @@ def create_app(settings: Settings | None = None, store: Store | None = None) -> 
         if len(version) != 64 or any(c not in "0123456789abcdef" for c in version):
             raise HTTPException(422, "Invalid dataset version")
         with store.engine.connect() as conn:
-            result = conn.scalar(select(datasets.c.payload).where(datasets.c.id == version))
+            result = conn.scalar(
+                select(datasets.c.payload).where(datasets.c.id == version, document_scope(datasets))
+            )
         if result is None:
             raise Missing()
         return redact(result)

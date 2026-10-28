@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="FF_", extra="ignore", hide_input_in_errors=True)
     database_url: str = Field(default="sqlite:///data/v2.db", repr=False)
-    mode: Literal["local", "demo", "private", "hosted"] = "local"
+    mode: Literal["local", "demo", "private", "hosted", "public"] = "local"
     provider: Literal["fake", "ollama", "groq"] = "fake"
     groq_api_key: SecretStr = Field(default=SecretStr(""), repr=False)
     producer_model: str = "llama3.1:8b"
@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     authorized_subject: str = ""
     owner_password_hash: SecretStr = Field(default=SecretStr(""), repr=False)
     public_origin: str = ""
+    visitor_session_seconds: int = Field(default=86400, ge=300, le=604800)
+    visitor_daily_submissions: int = Field(default=3, ge=1, le=20)
+    public_daily_submissions: int = Field(default=20, ge=1, le=100)
     session_seconds: int = Field(default=3600, ge=300, le=86400)
 
     @field_validator("database_url", mode="before")
@@ -49,7 +52,7 @@ class Settings(BaseSettings):
             raise ValueError(
                 "Private hosting requires trusted proxy IPs and one authorized OIDC subject"
             )
-        if self.mode == "hosted":
+        if self.mode in {"hosted", "public"}:
             from urllib.parse import urlsplit
             from ffv2.auth import valid_hash
 
@@ -64,7 +67,9 @@ class Settings(BaseSettings):
                 or origin.password
             ):
                 raise ValueError("Hosted mode requires an exact HTTPS public origin without a path")
-            if not valid_hash(self.owner_password_hash.get_secret_value()):
+            if self.mode == "hosted" and not valid_hash(
+                self.owner_password_hash.get_secret_value()
+            ):
                 raise ValueError("Hosted mode requires a generated owner password hash")
         if self.mode == "demo" and self.provider != "fake":
             raise ValueError("Demo requires fake provider")

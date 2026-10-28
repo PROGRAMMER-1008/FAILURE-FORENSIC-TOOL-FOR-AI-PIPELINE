@@ -10,6 +10,8 @@ The v2 application lives in `ffv2/` and `frontend/`. Original pipeline modules r
 
 [Watch or download the 62-second Groq video](https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE/raw/refs/heads/main/launch/failure-forensics-groq-demo.mp4). It uses a real Groq call with an invented invoice, with no injected error. Extraction returned **814 EUR** and classification returned **invoice**. The summary evaluator's citations failed validation, so the app kept the assessment **inconclusive**. One example is not an accuracy benchmark.
 
+The repository now includes a **public, password-free mode** with isolated visitor workspaces. See [Vercel + Render setup](docs/public-deployment.md). This code release does not automatically switch the existing owner-only deployment.
+
 The full application runs locally with your own Groq key or Ollama. The full single-owner app can be deployed using the [Render guide](docs/render-deployment.md). The [private hosted workspace](https://failure-forensics-project.onrender.com) was deployed on free Render hosting with Groq; see the readiness checklist for current verification limits. Owner sign-in is required. Free hosting sleeps when idle and its current database expires on 25 November 2026. See the [deployment readiness checklist](docs/deployment-readiness.md).
 
 ## Easy local setup (Windows)

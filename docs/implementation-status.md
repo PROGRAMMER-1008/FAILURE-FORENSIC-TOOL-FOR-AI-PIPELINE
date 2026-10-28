@@ -232,3 +232,14 @@ Exact JSON persistence comparison remains NOT VERIFIED. The earlier attempt was 
 Added docs/hosted-quickstart.md with URL, local password-file location, investigation steps and free-hosting limits. Rewrote both LinkedIn drafts to match the real Groq video: lead with debugging impact, explain structured outputs, LLM-as-judge, citation validation, graph analysis, controlled replay and human review, and group the technology stack by responsibility. Preserved month-long built-from-scratch story and upcoming-project posts; no invented accuracy, time-saving or business metrics. Nothing posted to LinkedIn.
 
 Remaining limitations: current hosted readiness and exact export persistence recheck; summary judge was unavailable in the hosted example; no target-host restore or alert-delivery test; free database expires 25 November 2026. These are explicitly recorded instead of labeling all external checks complete.
+
+
+## Public GitHub version — 2026-10-28
+
+Added opt-in public mode with automatically issued opaque visitor cookies, server-side expiry, exact-origin mutation checks, request-local ownership, and SQL scoping for runs/stats/reviews/events/exports/replay/datasets/experiments. Namespaced idempotency prevents cross-visitor collisions. Original owner records remain inaccessible in public mode. Worker access is separate from visitor request context; no schema rewrite or local .env access.
+
+Added conservative visitor/global submission quotas and a global session creation limit, retaining the existing shared Groq-call budget. Public UI explains no-password access, session lifetime, quotas, document transmission and exports. Added root Vercel frontend build/API proxy/no-cache configuration, switched the example Render Blueprint to public mode, and wrote docs/public-deployment.md. Existing deployed services remain unchanged until an explicit configuration deployment; the old Vercel sample is not presented as the public app.
+
+Local backend regression: 59 passed, 5 explicit skips (live Ollama, Linux-only parser enforcement, three PostgreSQL checks). New adversarial tests cover two visitors, old owner records, all artifact paths, cross-visitor writes, dataset freezing, experiments, concurrent request scoping, idempotency, forgery, CSRF, expiry and global quotas. Ruff and mypy passed. Frontend build/lint and all 9 component tests passed. HTTPS public browser validation and remote CI results are recorded below when available.
+
+Public HTTPS browser check passed locally: automatic no-password session, completed queued run, authenticated export, separate browser denied export, visitor settings, mobile axe zero violations and no horizontal overflow. Screenshot docs/screenshots/public-visitor.png visually inspected. Source scanner found zero matches in its limited scope; .env/data excluded and Git history not scanned. No live deployment or real-model accuracy claim is inferred from this fake-provider test.

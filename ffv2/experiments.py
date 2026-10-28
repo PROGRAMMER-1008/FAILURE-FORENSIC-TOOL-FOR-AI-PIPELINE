@@ -5,6 +5,7 @@ from sqlalchemy import insert, select
 from ffv2.benchmark import benchmark
 from ffv2.db import experiments, results, reviews
 from ffv2.models import Model, Run, now
+from ffv2.visitors import visitor
 from ffv2.privacy import fingerprint
 from ffv2.store import Missing, Store
 
@@ -16,7 +17,7 @@ class ExperimentRequest(Model):
 
 
 def experiment(store: Store, request: ExperimentRequest) -> dict:
-    experiment_id = fingerprint(request.model_dump())
+    experiment_id = fingerprint([visitor.get(), request.model_dump()])
     with store.engine.connect() as conn:
         existing = conn.scalar(
             select(experiments.c.payload).where(experiments.c.id == experiment_id)
@@ -26,6 +27,8 @@ def experiment(store: Store, request: ExperimentRequest) -> dict:
     report = benchmark(None)
     rows = report.pop("results")
     record = {"id": experiment_id, "created_at": now(), "report": report}
+    if identity := visitor.get():
+        record["visitor_id"] = identity
     with store.engine.begin() as conn:
         conn.execute(
             insert(experiments).values(

@@ -62,8 +62,8 @@ def main():
     if not os.environ.get("FF_PUBLIC_ORIGIN") and os.environ.get("RENDER_EXTERNAL_HOSTNAME"):
         os.environ["FF_PUBLIC_ORIGIN"] = "https://" + os.environ["RENDER_EXTERNAL_HOSTNAME"]
     settings = Settings()
-    if args.role in {"web", "project"} and settings.mode != "hosted":
-        raise SystemExit("Hosted web requires protected hosted mode")
+    if args.role in {"web", "project"} and settings.mode not in {"hosted", "public"}:
+        raise SystemExit("Hosted web requires hosted or isolated public mode")
     # A Render connection string uses postgresql://; propagate the normalized driver to Alembic.
     os.environ["FF_DATABASE_URL"] = settings.database_url
     if args.role == "migrate":
