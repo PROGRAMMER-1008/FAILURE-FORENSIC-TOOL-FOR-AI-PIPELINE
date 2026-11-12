@@ -37,6 +37,8 @@ The public mode can also run entirely on Render: set `FF_PUBLIC_ORIGIN` to the R
 
 ## Release status
 
-Public mode and deployment configuration are delivered in the repository. The existing Render deployment remains in owner mode until the operator deploys this revision and switches the settings. The earlier Vercel sample is not automatically replaced by pushing this repository. Do not announce either old URL as the public version until the two-browser live checks pass.
+The password-free public application is live at https://failure-forensics-pk.vercel.app. Vercel hosts the React frontend and proxies requests to the existing free Render API and PostgreSQL. The API uses Groq on the server; visitors do not enter or receive its key. A live public run verified three completed Groq generation steps and a citation-validation failure that correctly left diagnosis inconclusive. Deployment and exact run details are in [deployment-readiness.md](deployment-readiness.md).
+
+The browser interface sets a separate short-lived visitor session, scopes investigations and related artifacts to that visitor, and enforces shared limits. Use non-sensitive text. The service can sleep between visits, and its free database expires on 25 November 2026; export important runs. This is a temporary public project demo, not a production multi-tenant service or benchmark.
 
 Reference: [Vercel external rewrites](https://vercel.com/docs/routing/rewrites).

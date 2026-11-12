@@ -1,18 +1,22 @@
 # Failure Forensics
 
-A local document-pipeline investigation console: inspect truthful attempts, evidence-backed diagnosis hypotheses, human reviews and controlled replays. **Development preview, not production-ready.**
+An AI pipeline investigation console for tracing document evidence through extraction, classification and summarization. The free-hosted public demo is available now; shared fair-use limits and temporary database hosting make it a project demo, not a production SaaS.
 
 The v2 application lives in `ffv2/` and `frontend/`. Original pipeline modules remain available for compatibility and the legacy analyzer baseline. Original README: [legacy notes](docs/legacy-readme.md). Detailed acceptance gaps: [implementation status](docs/implementation-status.md).
 
-## Watch the real AI walkthrough
+## Try the public application
 
-[![Watch the Groq walkthrough](launch/groq-video-cover.png)](https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE/blob/main/launch/failure-forensics-groq-demo.mp4)
+Open the **[public Failure Forensics app](https://failure-forensics-pk.vercel.app)**. Visitors do not need an account, password or personal Groq key. Vercel serves the React frontend and proxies API requests to the FastAPI service on Render; Groq credentials stay on the server. Use the invented invoice or other non-sensitive content. Public visitor workspaces are isolated and subject to shared fair-use limits. The free Render database is temporary and expires on **25 November 2026**.
 
-[Watch or download the 62-second Groq video](https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE/raw/refs/heads/main/launch/failure-forensics-groq-demo.mp4). It uses a real Groq call with an invented invoice, with no injected error. Extraction returned **814 EUR** and classification returned **invoice**. The summary evaluator's citations failed validation, so the app kept the assessment **inconclusive**. One example is not an accuracy benchmark.
+## Watch the public AI walkthrough
 
-The repository now includes a **public, password-free mode** with isolated visitor workspaces. See [Vercel + Render setup](docs/public-deployment.md). This code release does not automatically switch the existing owner-only deployment.
+[![Watch the public Failure Forensics walkthrough](launch/public-demo-cover.png)](https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE/blob/main/launch/failure-forensics-public-demo.mp4)
 
-The full application runs locally with your own Groq key or Ollama. The full single-owner app can be deployed using the [Render guide](docs/render-deployment.md). The [private hosted workspace](https://failure-forensics-project.onrender.com) was deployed on free Render hosting with Groq; see the readiness checklist for current verification limits. Owner sign-in is required. Free hosting sleeps when idle and its current database expires on 25 November 2026. See the [deployment readiness checklist](docs/deployment-readiness.md).
+[Watch or download the 43-second public demo](https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE/raw/refs/heads/main/launch/failure-forensics-public-demo.mp4). The walkthrough uses an invented invoice in the live Groq-backed app. All three generation steps completed, but the evaluator returned invalid citation offsets, so Failure Forensics kept the diagnosis inconclusive instead of presenting an unsupported cause. This is one observed run, not a model-accuracy benchmark.
+
+[View deployment details and limits](docs/public-deployment.md) or [read the public quickstart](docs/hosted-quickstart.md). The older owner-only Render URL is not the public application.
+
+The full application can also run locally with Groq or Ollama, and a private single-owner Render configuration remains available through the [Render guide](docs/render-deployment.md). See the [deployment readiness record](docs/deployment-readiness.md) for the exact hosting checks and limitations.
 
 ## Easy local setup (Windows)
 
@@ -83,7 +87,7 @@ Set the same configuration in API and worker terminals before starting them. Sou
 - React console with source/attempt/evidence inspection, append-only human reviews and re-execution interventions.
 - Bounded document uploads including DOCX tables, parser isolation/deadline, source-context rejection rather than silent truncation.
 - Dry-run legacy import, stable IDs, immutable feedback dataset snapshots, synthetic benchmark, SQLite backup/restore and deletion tooling.
-- Hosted owner sign-in with revocable sessions, shared request budgets and Linux parser resource limits.
+- Hosted owner sign-in and password-free visitor mode with isolated sessions, shared request budgets and Linux parser resource limits.
 - Free Render combined web/worker and PostgreSQL Blueprint; read-only demo and optional trusted-proxy/OIDC boundaries.
 
 ## Verification

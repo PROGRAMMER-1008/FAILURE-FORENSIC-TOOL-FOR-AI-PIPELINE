@@ -1,0 +1,35 @@
+1
+00:00:00,000 --> 00:00:03,790
+Failure Forensics — Trace AI outputs back to evidence.
+
+2
+00:00:03,790 --> 00:00:08,375
+No account. A separate visitor workspace. The site owner provides the Groq connection.
+
+3
+00:00:08,375 --> 00:00:12,958
+Start with an invented invoice. This sample uses no personal or customer data.
+
+4
+00:00:12,958 --> 00:00:17,541
+Watch extraction, classification and summarization run. Execution is separate from quality.
+
+5
+00:00:17,541 --> 00:00:22,541
+Follow the dependency graph. See which steps read the source and each other.
+
+6
+00:00:22,541 --> 00:00:27,541
+Compare the summary with its source. Inspect claims and exact supporting text.
+
+7
+00:00:27,541 --> 00:00:33,541
+Bad citations stop a confident diagnosis. Invalid quote offsets make the result inconclusive.
+
+8
+00:00:33,541 --> 00:00:38,333
+Public access, with fair-use limits. No visitor password; sessions and AI calls are bounded.
+
+9
+00:00:38,333 --> 00:00:43,333
+Try the live public app: https://failure-forensics-pk.vercel.app

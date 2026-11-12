@@ -1,0 +1,11 @@
+[
+  {"start": 0.0, "title": "Failure Forensics", "description": "Trace AI outputs back to evidence."},
+  {"start": 3.8, "title": "Public visitor workspace", "description": "No account or visitor Groq key."},
+  {"start": 8.4, "title": "Invented invoice", "description": "Start with a safe sample."},
+  {"start": 13.0, "title": "Live Groq run", "description": "Watch the three document steps complete."},
+  {"start": 17.6, "title": "Dependency graph", "description": "Follow each step's source inputs."},
+  {"start": 22.6, "title": "Output and evidence", "description": "Compare generated text with the document."},
+  {"start": 27.6, "title": "Citation review", "description": "Invalid offsets keep diagnosis inconclusive."},
+  {"start": 33.6, "title": "Visitor limits", "description": "See public access and fair-use limits."},
+  {"start": 38.4, "title": "Try the app", "description": "https://failure-forensics-pk.vercel.app"}
+]

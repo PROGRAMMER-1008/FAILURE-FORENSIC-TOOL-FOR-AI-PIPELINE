@@ -11,7 +11,7 @@ Incremental implementation; no claim of completion or production readiness.
 | 4 UI/review | Core workflow verified | React build/lint and two component tests passed. Expanded browser submit→inspect→review→replay comparison→dataset freeze/export→experiment→refresh passed. Wide/narrow screenshots inspected; axe found no violations on tested detail page. Search/time/order filters implemented. |
 | 5 evaluation | Synthetic mechanics verified | 72 cases / 6 families; actual legacy/rules/graph comparison, source/graph ablations, origin metrics, category macro-F1, citation validity, family bootstrap intervals, report hashes, explicit-output replay scorer. Real whole-trace/same-vs-separate judge measurements and independent human agreement unavailable. |
 | 6 operations | Container build/readiness passed in GitHub CI; hosted checks remain | SQLite restore and explicit snapshot privacy deletion tested. Server-enforced demo and proxy/subject boundary tested. PostgreSQL restore and hosted HTTPS sign-in passed in CI; target-host operations and optional OIDC remain unverified. |
-| 7 verification | Local and GitHub CI passed; hosted acceptance outstanding | Latest local: 49 backend tests passed, 2 explicit skips; 9 component tests, build/lint/type checks passed. GitHub CI for 3e9dedc passed backend with PostgreSQL, frontend, container and browser jobs. Full AI hosting remains undeployed. |
+| 7 verification | Local and GitHub CI passed; public deployment partially verified | Local suite evidence is historical as logged below. Public deployment is live and one real Groq visitor run completed; live restart/export persistence and long-term hosting remain to verify. |
 
 ## Verification log
 
@@ -64,7 +64,7 @@ Remaining real/manual dependencies: reachable Ollama and installed models; actua
 - Telemetry counters are process-local; production metrics aggregation and operational alert delivery are examples, not deployed monitoring.
 - Parser isolation has a time/size bound but no Windows OS memory sandbox. Hosted resource quotas must be configured and tested.
 - Browser evidence covers one main workflow and the inspected responsive layouts, not every assistive technology/offline/session-expiry combination.
-- This is a local development application with explicit limitations, not a certified or deployed production service. Remote CI workflow files have not run because nothing was pushed.
+- The public app is a live, free-hosted project demo, not a certified or production multi-tenant service. All four GitHub Actions jobs passed for the public-code commit; live database restore and durability remain unverified.
 
 Session-created resources: `.venv`, `.uv-cache`, ignored synthetic test DBs and test outputs; Docker images and disposable containers `ff-v2-test-db`, `ff-v2-smoke`. Docker was unavailable for final cleanup; when it returns those two synthetic-only containers may be removed with `docker rm -f ff-v2-test-db ff-v2-smoke`. No user volumes were mounted into them.
 
@@ -243,3 +243,14 @@ Added conservative visitor/global submission quotas and a global session creatio
 Local backend regression: 59 passed, 5 explicit skips (live Ollama, Linux-only parser enforcement, three PostgreSQL checks). New adversarial tests cover two visitors, old owner records, all artifact paths, cross-visitor writes, dataset freezing, experiments, concurrent request scoping, idempotency, forgery, CSRF, expiry and global quotas. Ruff and mypy passed. Frontend build/lint and all 9 component tests passed. HTTPS public browser validation and remote CI results are recorded below when available.
 
 Public HTTPS browser check passed locally: automatic no-password session, completed queued run, authenticated export, separate browser denied export, visitor settings, mobile axe zero violations and no horizontal overflow. Screenshot docs/screenshots/public-visitor.png visually inspected. Source scanner found zero matches in its limited scope; .env/data excluded and Git history not scanned. No live deployment or real-model accuracy claim is inferred from this fake-provider test.
+
+## Current public deployment and demo — 12 November 2026
+
+- Public app: https://failure-forensics-pk.vercel.app (Vercel frontend, Render API/PostgreSQL). It opens without a password or visitor-provided key; the backend supplies Groq.
+- Verified a real public visitor run using the invented invoice. Extraction, classification and summarization all completed with Groq `openai/gpt-oss-20b`. The evaluator marked its citations invalid because two quote offsets did not match the source; the overall assessment remained **inconclusive**, with no root cause established. This is one run, not a quality benchmark.
+- Captured the public overview, sample input, live run, dependency graph, summary/evidence, invalid evaluator response and visitor limits into `launch/failure-forensics-public-demo.mp4` (43.3 seconds, H.264, 1280×720, 24 fps). Video captions and chapters are saved alongside it.
+- Updated both LinkedIn drafts and the README with the live app, repository and walkthrough links. The drafts have not been published to LinkedIn.
+- Previous public-mode isolation and quota regression checks, local UI checks and all four GitHub CI jobs for the public-code commit passed as recorded above. This live run does not replace two-profile, restore or ongoing-availability monitoring.
+- The free Render database expires **25 November 2026**. Render may sleep when idle; shared limits are 3 attempts per visitor/day, 20 submissions/day and 100 Groq calls/day. Export any run worth keeping.
+
+This deployment checkpoint supersedes the earlier note below that public mode had not yet been deployed. Remaining work: test restart/export persistence against the live database, keep the public URL monitored, and choose a durable database/hosting plan before the free database expires. No paid infrastructure was provisioned.
