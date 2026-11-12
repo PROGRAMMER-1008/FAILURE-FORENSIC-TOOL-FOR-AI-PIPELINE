@@ -248,8 +248,8 @@ Public HTTPS browser check passed locally: automatic no-password session, comple
 
 - Public app: https://failure-forensics-pk.vercel.app (Vercel frontend, Render API/PostgreSQL). It opens without a password or visitor-provided key; the backend supplies Groq.
 - Verified a real public visitor run using the invented invoice. Extraction, classification and summarization all completed with Groq `openai/gpt-oss-20b`. The evaluator marked its citations invalid because two quote offsets did not match the source; the overall assessment remained **inconclusive**, with no root cause established. This is one run, not a quality benchmark.
-- Captured the public overview, sample input, live run, dependency graph, summary/evidence, invalid evaluator response and visitor limits into `launch/failure-forensics-public-demo.mp4` (43.3 seconds, H.264, 1280×720, 24 fps). Video captions and chapters are saved alongside it.
-- Updated both LinkedIn drafts and the README with the live app, repository and walkthrough links. The drafts have not been published to LinkedIn.
+- Captured the public overview, sample input, live run, dependency graph, summary/evidence, invalid evaluator response and visitor limits into the repository-root `failure-forensics-public-demo.mp4` (43.3 seconds, H.264, 1280×720, 24 fps). For this walkthrough, the repository keeps only the root MP4, with no extra image, subtitle, chapter or post files.
+- Reviewed the recent LinkedIn profile activity and prepared updated copy for delivery in chat. LinkedIn post text is not stored in the repository and has not been published.
 - Previous public-mode isolation and quota regression checks, local UI checks and all four GitHub CI jobs for the public-code commit passed as recorded above. This live run does not replace two-profile, restore or ongoing-availability monitoring.
 - The free Render database expires **25 November 2026**. Render may sleep when idle; shared limits are 3 attempts per visitor/day, 20 submissions/day and 100 Groq calls/day. Export any run worth keeping.
 

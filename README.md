@@ -10,9 +10,7 @@ Open the **[public Failure Forensics app](https://failure-forensics-pk.vercel.ap
 
 ## Watch the public AI walkthrough
 
-[![Watch the public Failure Forensics walkthrough](launch/public-demo-cover.png)](https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE/blob/main/launch/failure-forensics-public-demo.mp4)
-
-[Watch or download the 43-second public demo](https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE/raw/refs/heads/main/launch/failure-forensics-public-demo.mp4). The walkthrough uses an invented invoice in the live Groq-backed app. All three generation steps completed, but the evaluator returned invalid citation offsets, so Failure Forensics kept the diagnosis inconclusive instead of presenting an unsupported cause. This is one observed run, not a model-accuracy benchmark.
+[Watch or download the 43-second public demo](https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE/raw/refs/heads/main/failure-forensics-public-demo.mp4). The walkthrough uses an invented invoice in the live Groq-backed app. All three generation steps completed, but the evaluator returned invalid citation offsets, so Failure Forensics kept the diagnosis inconclusive instead of presenting an unsupported cause. This is one observed run, not a model-accuracy benchmark.
 
 [View deployment details and limits](docs/public-deployment.md) or [read the public quickstart](docs/hosted-quickstart.md). The older owner-only Render URL is not the public application.
 

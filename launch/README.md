@@ -1,28 +1,10 @@
-# Failure Forensics launch kit
+# Public Failure Forensics demo
 
-Recommended sharing link: https://github.com/PROGRAMMER-1008/FAILURE-FORENSIC-TOOL-FOR-AI-PIPELINE
+- **Live app:** https://failure-forensics-pk.vercel.app
+- **Video:** [`failure-forensics-public-demo.mp4`](../failure-forensics-public-demo.mp4) in the repository root.
 
-Share the repository with `failure-forensics-groq-demo.mp4`. The earlier static demo is optional and is not the full application.
+The 43-second, silent H.264 video shows the public visitor interface and a live Groq run using an invented invoice. The model steps complete, while invalid citation offsets keep the diagnosis inconclusive. It is a captioned visual walkthrough assembled from captures of the real app session, not a continuous desktop recording or an accuracy benchmark.
 
-- `failure-forensics-demo.mp4`: captioned recording of the actual local app, H.264, 1280×800, silent. Uses invented data and the synthetic provider only.
-- `video-cover.png`: cover image from the recording.
-- `demo-captions.srt`: optional timed captions for the 57.64-second silent video. Captions are also visible in the video.
-- `demo-chapters.json`: chapter timing and caption text; reusable as a narration outline.
-- `linkedin-post.md`: first-person post drafted from the owner's stated month-long project history. Describes a project built from scratch, not an upgrade.
-- `deployment.md`: verified deployment details, usage instructions and limits.
+For this new walkthrough, the repository stores only the main MP4 at its root; supporting images, subtitle files, chapter data and LinkedIn post copy are not included. Earlier project demos remain unchanged. The LinkedIn post text and suggested source-code comment are provided separately in chat. The post has not been published.
 
-Upload the MP4 directly to LinkedIn, paste `linkedin-post-groq.md`, and use the repository link. Review the first-person wording before posting. No LinkedIn post or message has been sent on your behalf.
-
-The public sample is intentionally separate from the private full application: no document uploads, API key entry, real AI requests or shared database. The full Python API and worker are not deployed by the static showcase. Visitor input in the correction exercise stays in browser memory and disappears on refresh.
-
-## Reproduce the recording
-
-Use a dedicated synthetic database, migrate it, and start the API/worker on loopback port 18767 with `FF_PROVIDER=fake`. From `frontend`, run `node scripts/record-demo.mjs` with Node 22.22.2. The script does not load .env. Convert the resulting WebM to MP4 using FFmpeg with H.264 and yuv420p. Never record private source documents or credential settings.
-
-## Real Groq recording
-
-`failure-forensics-groq-demo.mp4` is a second, 61.96-second captioned silent recording using live Groq (`openai/gpt-oss-20b`), an invented invoice and no error injection. The three generation steps completed. Extraction returned 814 EUR; classification returned invoice. The summary evaluator failed citation validation, so overall quality remained inconclusive. This is one observed run, not an accuracy benchmark.
-
-Published supporting files: `groq-demo-chapters.json` and `groq-video-cover.png`. Raw WebM recordings, run evidence and deployment scratch folders stay local and are not included in GitHub. The recording uses a separate database and the existing app's runtime credential loading; no key was displayed or copied into these artifacts. API requests use the owner's Groq account quota.
-
-The locally retained `vercel-sample/` folder is an isolated static deployment folder for a personal Vercel address. It does not expose the Groq backend. Published under the owner’s Vercel account at https://failure-forensics-pk.vercel.app.
+The free demo uses shared fair-use limits and its Render database is scheduled to expire on 25 November 2026. See [public deployment limits](../docs/public-deployment.md).
